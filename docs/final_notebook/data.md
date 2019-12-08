@@ -77,97 +77,55 @@ header {
 # Data Collection and Cleaning
 
 
-## Playlists
-Grace created two playlists. The first includes random songs that Grace would include in her playlist (a "favorites" playlist), and the other playlist includes random songs that Grace would not include in her playlist (the "not-so-favorites" playlist). 
-These two playlists are linked below.
-### Grace's Favorites Playlist
-{: .no_toc }
-<iframe src="https://open.spotify.com/embed/user/gzgracez2/playlist/6Jpt5r9KD8FEUDioBFV0r0" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-### Grace's Not-So-Favorites Playlist
-{: .no_toc }
-<iframe src="https://open.spotify.com/embed/user/gzgracez2/playlist/4B3qR5p6PD8nXXeq4C0Gz7" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+## Twitter
+We pulled all of Trump's tweets in the last few years from his Twitter archive. Due to the naature of the database, we spent much time cleaning this data for our purposes. We took the following steps to clean the data:</p>
++ Importing raw data from the archive
++ Removing unnecessary columns
++ Adjusting GMT to Eastern Time + accounting for daylight savings
++ Manually fixing errors in cells where the delimiting was incorrectly done in the database output and manually re-inserting the delimiting character
+	
+We utilized `ntlk</code`'s `textblob` function in order to analyze the sentiment of tweets in our data set. For each tweet, this function created a polarity score (the more positive a tweet is, the closer the score is to 1; the more negative, the closer it is to -1). The function also returns a subjectivity score. Lower subjectivity score means that the tweet's polarity score more objectively represents its sentiment.
 
-## Spotify API 
+## VIX
+VIX is the first benchmark index to measure expectations of future market volatility 
+	(based on S&P 500 options). Since Milestone 2, we have procured minute-by-minute VIX data from 12/2015 - 11/11/2019. 
+	This data includes only VIX pricing on trading days throughout the past few years (excludes holidays, weekends, etc.). 
+	We manually pulled the data from a Bloomberg Terminal at HBS Baker Library. Given the size of the dataset and the Terminal download limits, we manually copied and pasted the VIX data directly into a csv file. Note that all other sources of VIX data are at best day-by-day and typically cost a nontrivial amount.
 
-We then extracted our data from these playlists by using the Spotify API to create a .csv file of songs and their features. 
-We used the Spotify API's `user_playlist_tracks` endpoint to collect track features, including `track_id`s, of the tracks in each of these playlists. 
-We then used the `audio_features` endpoint to get additional features like `danceability` for each of our tracks. 
-Finally, we added the `in_playlist` feature to each of our tracks, labeling them with a 1 if they were from the favorites playlist and a 0 indicating the not-so-favorites playlist.
-All of this data was ultimately written to a `spotify.csv` file.
+VIX is managed by CBOE (Chicago Board Options Exchange). The global trading hours for VIX can be found [here]("https://www.cboe.com/micro/eth/pdf/global-trading-hours.pdf"). Trading hours range from 3:15 am EST until 4:15 pm EST. There is a break bewteen 9:15 and 9:30 am, but this is addressed in how we consolidate our data.
+
+## Consolidated Data
+In order to consolidate the data, we merge our Twitter and VIX dataframes on date/time to ensure that we are only looking
+	at tweets that are posted during VIX trading hours. That way, we do not have to worry about tweets occurring outside
+	these hours. Also, when we look at the change in VIX price, we are only looking at changes during trading hours, so
+	examining only tweets that are posted during trading hours allows us to perform this analysis soundly.
 
 ```python
-import sys
-import spotipy
-import spotipy.util as util
-import json
-import pandas as pd
-from math import ceil
+from textblob import TextBlob
+tweets = twitter_archive_df['text']
+tweets_list = [tweet for tweet in tweets]
+big_tweet_string = ' '.join(tweets_list)
 
-scope = 'user-library-read'
-LIMIT = 50
-PLAYLIST_1_LEN = 2660
-PLAYLIST_0_LEN = 2492
+tokens = word_tokenize(big_tweet_string)
+words = [word.lower() for word in tokens if word.isalpha()]
 
-def get_track_features_offset(playlist_id, offset, in_playlist):
-    results = sp.user_playlist_tracks(
-        'UroAv2poQoWSvUOfch8wmg', 
-        playlist_id=playlist_id,
-        limit=LIMIT,
-        offset=offset,
-    )
-    track_infos = []
-    for i in results['items']:
-        track_infos.append({
-            'id': i['track']['id'],
-            'name': i['track']['name'],
-            'popularity': i['track']['popularity'],
-            'artist': i['track']['artists'][0]['name'] if len(i['track']['artists']) > 0 else None,
-        })
-    track_ids = [i['id'] for i in track_infos]
+stop_words = set(stopwords.words('english'))
+words = [word for word in words if not word in stop_words]
 
-    try:
-        tracks_features = sp.audio_features(track_ids)
-    except:
-        return []
-    for idx, track in enumerate(tracks_features):
-        track['name'] = track_infos[idx]['name']
-        track['popularity'] = track_infos[idx]['popularity']
-        track['artist'] = track_infos[idx]['artist']
-        track['in_playlist'] = in_playlist
-    return tracks_features
+scores = []
+subjectivity = []
+for tweet in tweets_list:
+    blob_tweet = TextBlob(tweet)
+    sentiment = blob_tweet.sentiment
+    score = sentiment[0]
+    subject = sentiment[1]
+    
+    scores.append(float(score))
+    subjectivity.append(float(subject))
 
-def get_track_features(playlist_id, num_iters, in_playlist):
-    track_features = []
-    for i in range(num_iters):
-        track_features.extend(
-            get_track_features_offset(playlist_id, i * LIMIT, in_playlist)
-        )
-    return track_features
-
-
-# Setup
-if len(sys.argv) > 1:
-    username = sys.argv[1]
-else:
-    print("Usage: %s username" % (sys.argv[0],))
-    sys.exit()
-token = util.prompt_for_user_token(username, scope)
-if not token: 
-    print("Can't get token for", username)
-
-sp = spotipy.Spotify(auth=token)
-
-# Get track features
-n_playlist0 = ceil(PLAYLIST_0_LEN / LIMIT)
-n_playlist1 = ceil(PLAYLIST_1_LEN / LIMIT)
-
-tracks_features0 = get_track_features('4B3qR5p6PD8nXXeq4C0Gz7', n_playlist0, 0)
-tracks_features1 = get_track_features('6Jpt5r9KD8FEUDioBFV0r0', n_playlist1, 1)
-tracks_features = tracks_features0 + tracks_features1
-
-with open('spotify-more2.csv', mode='w') as f:
-    df = pd.read_json(json.dumps(tracks_features))
-    f.write(df.to_csv())
+twitter_archive_df['sent_score'] = scores
+twitter_archive_df['subjectivity'] = subjectivity
+# twitter_archive_df.head()
 ```
 
 
