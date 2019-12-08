@@ -17,30 +17,32 @@ nav_order: 1
 
 # Overview
 
-For our final project, we created a best-performing model to help classify songs for Grace's playlist. 
-We used the Spotify API to download features for songs Grace selected as playlist-worthy and playlist-unworthy.
-After getting a grasp on the data, we built classifiers to predict whether a song should be in or out of her playlist.
-The Decision Tree Classifier with Boosting was the best-performing model, improving our accuracy in the test set from 51.6% to 93.0%.
-We used this model to classify a fresh set of songs for Grace, and she loved listening to her augmented playlist!
+For our final project, we wanted to build a model that uses President Trump's tweets to predict changes in the VIX Index. Theoretically, a model performing accurately 51 (or higher) percent of the time provides a way to intelligently bet on market volatility and generate a positive return on average. 
+
+We utilized Trump's Twitter archive ([here] (http://www.trumptwitterarchive.com/archive)) to build our database of tweets, and we pulled minute-by-minute VIX data from an HBS Baker Library Bloomberg Terminal. Our analysis begins in May 2016 when Trump emerged as a solid, leading candidate for the GOP in the 2016 Presidential election. 
+*insert info about models*
+
+
+*insert photo*
 
 <div style="text-align: center">
   <img src="sy.png" width="40%">
 </div>
 
 # Website Navigation
-Our motivations for the project as well as our literature review can be found on the [background](background.html) page. 
-A description of the data as well as our exploratory data analysis can be found on the [data exploration](final_notebook/data.html) page.
-Our models can be found on the [models](final_notebook/models.html) page. 
-Our results, analysis, conclusions, and suggestions for moving forward can be found on the [conclusions](conclusions.html) page.
+Our project background and question, as well as a brief literature review, can be found on the [background](background.html) page. 
+Our data description and collection information, as well as our exploratory data analysis, can be found on the [data exploration](final_notebook/data.html) page.
+Our final models can be found on the [models](final_notebook/models.html) page. 
+Our results, analysis, conclusions, and final discussion can be found on the [conclusions](conclusions.html) page.
 
 # About Us
-We are Tejal Patwardhan, Akshitha Ramachandran, and Grace Zhang, Group 49 for CS109A. 
-Special thanks to Pavlos Protopapas, Kevin Rader, and Rashmi Banthia for their assistance.
+We are Gaurang Goel, Yashvardhan Bardoloi, and Adil Bhatia, Group 3 in CS109A, Fall 2019. 
+Special thanks to Robbert Struyven and James Zeitler for their assistance.
 
 <div style="text-align: center">
-	<img src="tej.jpeg" width="40%">
-	<img src="grace.jpeg" width="40%">
-	<img src="ak.jpeg" width="40%">
-	<img src="wom.png" width="40%">
+	<img src="gaurang.jpeg" width="40%">
+	<img src="yash.jpeg" width="40%">
+	<img src="adil.jpeg" width="40%">
+	<img src="trump.png" width="40%">
 </div>
 
