@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <title>Background - Spotify You</title>
+  <link rel="stylesheet" href="http://localhost:4000/assets/css/just-the-docs.css">
+  
+  <script type="text/javascript" src="http://localhost:4000/assets/js/vendor/lunr.min.js"></script>
+  
+  <script type="text/javascript" src="http://localhost:4000/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+
+  <div class="page-wrap">
+    <div class="side-bar">
+      <a href="http://localhost:4000" class="site-title fs-6 lh-tight">Spotify You</a>
+      <span class="fs-3"><button class="js-main-nav-trigger navigation-list-toggle btn btn-outline" type="button" data-text-toggle="Hide">Menu</button></span>
+      <div class="navigation main-nav js-main-nav">
+        <nav>
+  <ul class="navigation-list">
+    
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/" class="navigation-list-link">Home</a>
+            
+          </li>
+        
+      
+    
+      
+        
+          <li class="navigation-list-item active">
+            
+            <a href="http://localhost:4000/background.html" class="navigation-list-link active">Background</a>
+            
+          </li>
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/final_notebook/data.html" class="navigation-list-link">Data Exploration</a>
+            
+          </li>
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/final_notebook/models.html" class="navigation-list-link">Models</a>
+            
+          </li>
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/conclusions.html" class="navigation-list-link">Conclusions</a>
+            
+          </li>
+        
+      
+    
+  </ul>
+</nav>
+
+      </div>
+      <footer role="contentinfo" class="site-footer">
+        <p class="text-small text-grey-dk-000 mb-0">This site uses <a href="https://github.com/pmarsceill/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.</p>
+      </footer>
+    </div>
+    <div class="main-content-wrap">
+      <div class="page-header">
+        <div class="main-content">
+          
+          <div class="search js-search">
+            <div class="search-input-wrap">
+              <input type="text" class="js-search-input search-input" placeholder="Search Spotify You" aria-label="Search Spotify You" autocomplete="off">
+              <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon"><title>Search</title><g fill-rule="nonzero"><path d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z"/><path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z"/></g></svg>
+            </div>
+            <div class="js-search-results search-results-wrap"></div>
+          </div>
+          
+          
+            <ul class="list-style-none text-small mt-md-1 mb-md-1 pb-4 pb-md-0 js-aux-nav aux-nav">
+              
+                <li class="d-inline-block my-0"><a href="//github.com/gzgracez/CS-109A-Final-Project">Spotify You on GitHub</a></li>
+              
+            </ul>
+          
+        </div>
+      </div>
+      <div class="main-content">
+        
+          
+        
+        <div class="page-content">
+          <h1 class="no_toc" id="background">Background</h1>
+
+<h2 class="no_toc text-delta" id="table-of-contents">Table of contents</h2>
+
+<ol id="markdown-toc">
+  <li><a href="#motivation" id="markdown-toc-motivation">Motivation</a></li>
+  <li><a href="#approach" id="markdown-toc-approach">Approach</a></li>
+  <li><a href="#literature-review" id="markdown-toc-literature-review">Literature Review</a></li>
+</ol>
+
+<hr />
+
+<h1 id="motivation">Motivation</h1>
+
+<p>Spotify is a popular music streaming platform that allows users to curate their own playlists. 
+Music recommender systems help users find songs based on what they might like. 
+We wanted to help Grace curate a Spotify playlist of her favorite songs using the classification techniques we learned in class.
+Grace struggles to classify with words what makes a song fit into her vibe. 
+“I’d jam to Madison Thompson’s ‘Lonely Together,’ but definitely not to Avicii’s.”
+When words fail, data science might help. 
+We decided to use techniques from Cs109a to solve the problem of finding the best classification model for Grace’s playlist, 
+and then use that model to find her more songs for her playlist.</p>
+
+<p>We had three goals:</p>
+<ol>
+  <li>to create the best performing model to classify songs as in or out of Grace’s playlist</li>
+  <li>to use that model to suggest new songs for Grace’s playlist</li>
+  <li>to produce a sleek interface using <i>jekyll</i> to display our analysis, so that others can replicate our method on their playlists</li>
+</ol>
+
+<h1 id="approach">Approach</h1>
+<p>First, we asked Grace to label a set of songs as included in her playlist and another set of songs as songs she would not want to listen to.
+We used Spotify API to download her playlists with feature data for each song in the playlist.
+We then randomly split this data into a training and test set. 
+Next, we built and fit a variety of classifiers for Grace’s playlist on the training set. Models we built include:</p>
+<ul>
+  <li>Baseline Model</li>
+  <li>Logistic Classifier</li>
+  <li>Logistic Classifier With Quadratic Terms</li>
+  <li>Logistic Classifier With L1 Regularization</li>
+  <li>Logistic Classifier With L2 Regularization</li>
+  <li>k-Nearest Neighbors</li>
+  <li>Linear Discriminant Analysis</li>
+  <li>Quadratic Discriminant Analysis</li>
+  <li>Decision Tree Classifier</li>
+  <li>Decision Tree Classifier with Bagging</li>
+  <li>Random Forest</li>
+  <li>Decision Tree Classifier with Boosting</li>
+  <li>Neural Network</li>
+</ul>
+
+<p>For each model, we evaluated its accuracy on both our training and and test set. 
+Based on accuracy scores, we determined the classifier with the highest performance on the test set. 
+Finally, we ran our best-performing model on a fresh set of songs and asked Grace if she liked her new playlist.</p>
+
+<hr />
+
+<h1 id="literature-review">Literature Review</h1>
+<p><a href="https://arxiv.org/pdf/1710.03208.pdf">Current Challenges and Visions in Music Recommender Systems Research</a></p>
+<ul>
+  <li>Biggest current issues in MRS: cold start, automatic playlist generation, and evaluation.</li>
+  <li>State-of-the-art techniques in playlist extension include collaborative filtering and Markov chain models
+    <ul>
+      <li>limitations include ordering of songs within playlists and incorporating situational characteristics that affect listeners</li>
+    </ul>
+  </li>
+  <li>Future work includes incorporating personality, current emotional state, political situation, and cultural situation into music recommendations.</li>
+</ul>
+
+<p><a href="https://arxiv.org/pdf/1810.01520.pdf">An Analysis of Approaches Taken in the ACM RecSys Challenge 2018</a></p>
+<ul>
+  <li>In 2018, Spotify sponsored a challenge involving addressing the automatic music playlist continuation problem</li>
+  <li>Most accurate classifiers involved:
+    <ul>
+      <li>Larger training sets produced better-performing models
+        <ul>
+          <li>If training sets were subset, using a random subset of the playlist rather than the sequentially first songs in a playlist was most accurate in training a model</li>
+        </ul>
+      </li>
+      <li>Excluding “title” as meta-data for the playlist produced better models across the board</li>
+      <li>Solutions using the descriptors from the Spotify API were more efficient</li>
+    </ul>
+  </li>
+</ul>
+
+<p><a href="people.tamu.edu/~zhaoxing623/publications/XZ_TrailMix.pdf">TrailMix: An Ensemble Recommender System for Playlist Curation and Continuation</a></p>
+<ul>
+  <li>Successful RecSys project TrailMix compared 3 recommender models:
+    <ul>
+      <li>song clustering purely based on title</li>
+      <li>decorated neural collaborative filtering</li>
+      <li>decision tree</li>
+    </ul>
+  </li>
+  <li>The title model performed very poorly compared to the other two models
+    <ul>
+      <li>The authors acknowledge that using analysis beyond the literal words, ex. incorporating NLP methods, could help</li>
+    </ul>
+  </li>
+  <li>An ensemble of all three models performed best</li>
+</ul>
+
+<p><a href="http://openaccess.city.ac.uk/6344/3/VLHCC2013.pdf">Ways Explanations Impact End Users’ Mental Models</a></p>
+<ul>
+  <li>This paper explored the explanations of music song recommenders to users</li>
+  <li>Part of enabling users to debug their models is explaining these agents to users well enough for them to build useful mental models</li>
+  <li>A kNN and bagged decision tree ensemble model was used to recommend songs</li>
+  <li>Completeness of explanations were more important than soundness in understanding models (ie–explaining everything as opposed to explaining only a part but explaining that part fully correctly)</li>
+  <li>They found that in general, comprehensive explanations were more useful than simple ones</li>
+</ul>
+
+
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</html>

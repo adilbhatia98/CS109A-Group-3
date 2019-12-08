@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <title>Data Exploration - Spotify You</title>
+  <link rel="stylesheet" href="http://localhost:4000/assets/css/just-the-docs.css">
+  
+  <script type="text/javascript" src="http://localhost:4000/assets/js/vendor/lunr.min.js"></script>
+  
+  <script type="text/javascript" src="http://localhost:4000/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+
+  <div class="page-wrap">
+    <div class="side-bar">
+      <a href="http://localhost:4000" class="site-title fs-6 lh-tight">Spotify You</a>
+      <span class="fs-3"><button class="js-main-nav-trigger navigation-list-toggle btn btn-outline" type="button" data-text-toggle="Hide">Menu</button></span>
+      <div class="navigation main-nav js-main-nav">
+        <nav>
+  <ul class="navigation-list">
+    
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/" class="navigation-list-link">Home</a>
+            
+          </li>
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/background.html" class="navigation-list-link">Background</a>
+            
+          </li>
+        
+      
+    
+      
+        
+          <li class="navigation-list-item active">
+            
+            <a href="http://localhost:4000/final_notebook/data.html" class="navigation-list-link active">Data Exploration</a>
+            
+          </li>
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/final_notebook/models.html" class="navigation-list-link">Models</a>
+            
+          </li>
+        
+      
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="http://localhost:4000/conclusions.html" class="navigation-list-link">Conclusions</a>
+            
+          </li>
+        
+      
+    
+  </ul>
+</nav>
+
+      </div>
+      <footer role="contentinfo" class="site-footer">
+        <p class="text-small text-grey-dk-000 mb-0">This site uses <a href="https://github.com/pmarsceill/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.</p>
+      </footer>
+    </div>
+    <div class="main-content-wrap">
+      <div class="page-header">
+        <div class="main-content">
+          
+          <div class="search js-search">
+            <div class="search-input-wrap">
+              <input type="text" class="js-search-input search-input" placeholder="Search Spotify You" aria-label="Search Spotify You" autocomplete="off">
+              <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon"><title>Search</title><g fill-rule="nonzero"><path d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z"/><path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z"/></g></svg>
+            </div>
+            <div class="js-search-results search-results-wrap"></div>
+          </div>
+          
+          
+            <ul class="list-style-none text-small mt-md-1 mb-md-1 pb-4 pb-md-0 js-aux-nav aux-nav">
+              
+                <li class="d-inline-block my-0"><a href="//github.com/gzgracez/CS-109A-Final-Project">Spotify You on GitHub</a></li>
+              
+            </ul>
+          
+        </div>
+      </div>
+      <div class="main-content">
+        
+          
+        
+        <div class="page-content">
+          <h1 class="no_toc" id="data-exploration">Data Exploration</h1>
+
+<h2 class="no_toc text-delta" id="table-of-contents">Table of contents</h2>
+
+<ol id="markdown-toc">
+  <li><a href="#data-collection-and-cleaning" id="markdown-toc-data-collection-and-cleaning">Data Collection and Cleaning</a>    <ol>
+      <li><a href="#playlists" id="markdown-toc-playlists">Playlists</a></li>
+      <li><a href="#spotify-api" id="markdown-toc-spotify-api">Spotify API</a></li>
+    </ol>
+  </li>
+  <li><a href="#data-description" id="markdown-toc-data-description">Data Description</a></li>
+  <li><a href="#exploratory-data-analysis" id="markdown-toc-exploratory-data-analysis">Exploratory Data Analysis</a></li>
+</ol>
+
+<hr />
+
+<!-- 
+<style>
+blockquote { background: #AEDE94; }
+h1 { 
+    padding-top: 25px;
+    padding-bottom: 25px;
+    text-align: left; 
+    padding-left: 10px;
+    background-color: #DDDDDD; 
+    color: black;
+}
+h2 { 
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: left; 
+    padding-left: 5px;
+    background-color: #EEEEEE; 
+    color: black;
+}
+
+div.exercise {
+	background-color: #ffcccc;
+	border-color: #E9967A; 	
+	border-left: 5px solid #800080; 
+	padding: 0.5em;
+}
+div.theme {
+	background-color: #DDDDDD;
+	border-color: #E9967A; 	
+	border-left: 5px solid #800080; 
+	padding: 0.5em;
+	font-size: 18pt;
+}
+div.gc { 
+	background-color: #AEDE94;
+	border-color: #E9967A; 	 
+	border-left: 5px solid #800080; 
+	padding: 0.5em;
+	font-size: 12pt;
+}
+p.q1 { 
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: left; 
+    padding-left: 5px;
+    background-color: #EEEEEE; 
+    color: black;
+}
+header {
+   padding-top: 35px;
+    padding-bottom: 35px;
+    text-align: left; 
+    padding-left: 10px;
+    background-color: #DDDDDD; 
+    color: black;
+}
+</style>
+ -->
+
+<h1 id="data-collection-and-cleaning">Data Collection and Cleaning</h1>
+
+<h2 id="playlists">Playlists</h2>
+<p>Grace created two playlists. The first includes random songs that Grace would include in her playlist (a “favorites” playlist), and the other playlist includes random songs that Grace would not include in her playlist (the “not-so-favorites” playlist). 
+These two playlists are linked below.</p>
+<h3 class="no_toc" id="graces-favorites-playlist">Grace’s Favorites Playlist</h3>
+<iframe src="https://open.spotify.com/embed/user/gzgracez2/playlist/6Jpt5r9KD8FEUDioBFV0r0" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+<h3 class="no_toc" id="graces-not-so-favorites-playlist">Grace’s Not-So-Favorites Playlist</h3>
+<iframe src="https://open.spotify.com/embed/user/gzgracez2/playlist/4B3qR5p6PD8nXXeq4C0Gz7" width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+
+<h2 id="spotify-api">Spotify API</h2>
+
+<p>We then extracted our data from these playlists by using the Spotify API to create a .csv file of songs and their features. 
+We used the Spotify API’s <code class="highlighter-rouge">user_playlist_tracks</code> endpoint to collect track features, including <code class="highlighter-rouge">track_id</code>s, of the tracks in each of these playlists. 
+We then used the <code class="highlighter-rouge">audio_features</code> endpoint to get additional features like <code class="highlighter-rouge">danceability</code> for each of our tracks. 
+Finally, we added the <code class="highlighter-rouge">in_playlist</code> feature to each of our tracks, labeling them with a 1 if they were from the favorites playlist and a 0 indicating the not-so-favorites playlist.
+All of this data was ultimately written to a <code class="highlighter-rouge">spotify.csv</code> file.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">spotipy</span>
+<span class="kn">import</span> <span class="nn">spotipy.util</span> <span class="k">as</span> <span class="n">util</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">ceil</span>
+
+<span class="n">scope</span> <span class="o">=</span> <span class="s">'user-library-read'</span>
+<span class="n">LIMIT</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">PLAYLIST_1_LEN</span> <span class="o">=</span> <span class="mi">2660</span>
+<span class="n">PLAYLIST_0_LEN</span> <span class="o">=</span> <span class="mi">2492</span>
+
+<span class="k">def</span> <span class="nf">get_track_features_offset</span><span class="p">(</span><span class="n">playlist_id</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">in_playlist</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">user_playlist_tracks</span><span class="p">(</span>
+        <span class="s">'UroAv2poQoWSvUOfch8wmg'</span><span class="p">,</span> 
+        <span class="n">playlist_id</span><span class="o">=</span><span class="n">playlist_id</span><span class="p">,</span>
+        <span class="n">limit</span><span class="o">=</span><span class="n">LIMIT</span><span class="p">,</span>
+        <span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">track_infos</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="s">'items'</span><span class="p">]:</span>
+        <span class="n">track_infos</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+            <span class="s">'id'</span><span class="p">:</span> <span class="n">i</span><span class="p">[</span><span class="s">'track'</span><span class="p">][</span><span class="s">'id'</span><span class="p">],</span>
+            <span class="s">'name'</span><span class="p">:</span> <span class="n">i</span><span class="p">[</span><span class="s">'track'</span><span class="p">][</span><span class="s">'name'</span><span class="p">],</span>
+            <span class="s">'popularity'</span><span class="p">:</span> <span class="n">i</span><span class="p">[</span><span class="s">'track'</span><span class="p">][</span><span class="s">'popularity'</span><span class="p">],</span>
+            <span class="s">'artist'</span><span class="p">:</span> <span class="n">i</span><span class="p">[</span><span class="s">'track'</span><span class="p">][</span><span class="s">'artists'</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s">'name'</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="s">'track'</span><span class="p">][</span><span class="s">'artists'</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="bp">None</span><span class="p">,</span>
+        <span class="p">})</span>
+    <span class="n">track_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="s">'id'</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">track_infos</span><span class="p">]</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">tracks_features</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">audio_features</span><span class="p">(</span><span class="n">track_ids</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">track</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tracks_features</span><span class="p">):</span>
+        <span class="n">track</span><span class="p">[</span><span class="s">'name'</span><span class="p">]</span> <span class="o">=</span> <span class="n">track_infos</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="s">'name'</span><span class="p">]</span>
+        <span class="n">track</span><span class="p">[</span><span class="s">'popularity'</span><span class="p">]</span> <span class="o">=</span> <span class="n">track_infos</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="s">'popularity'</span><span class="p">]</span>
+        <span class="n">track</span><span class="p">[</span><span class="s">'artist'</span><span class="p">]</span> <span class="o">=</span> <span class="n">track_infos</span><span class="p">[</span><span class="n">idx</span><span class="p">][</span><span class="s">'artist'</span><span class="p">]</span>
+        <span class="n">track</span><span class="p">[</span><span class="s">'in_playlist'</span><span class="p">]</span> <span class="o">=</span> <span class="n">in_playlist</span>
+    <span class="k">return</span> <span class="n">tracks_features</span>
+
+<span class="k">def</span> <span class="nf">get_track_features</span><span class="p">(</span><span class="n">playlist_id</span><span class="p">,</span> <span class="n">num_iters</span><span class="p">,</span> <span class="n">in_playlist</span><span class="p">):</span>
+    <span class="n">track_features</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iters</span><span class="p">):</span>
+        <span class="n">track_features</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+            <span class="n">get_track_features_offset</span><span class="p">(</span><span class="n">playlist_id</span><span class="p">,</span> <span class="n">i</span> <span class="o">*</span> <span class="n">LIMIT</span><span class="p">,</span> <span class="n">in_playlist</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">return</span> <span class="n">track_features</span>
+
+
+<span class="c"># Setup</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="n">username</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Usage: </span><span class="si">%</span><span class="s">s username"</span> <span class="o">%</span> <span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">],))</span>
+    <span class="n">sys</span><span class="o">.</span><span class="nb">exit</span><span class="p">()</span>
+<span class="n">token</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">prompt_for_user_token</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">scope</span><span class="p">)</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">token</span><span class="p">:</span> 
+    <span class="k">print</span><span class="p">(</span><span class="s">"Can't get token for"</span><span class="p">,</span> <span class="n">username</span><span class="p">)</span>
+
+<span class="n">sp</span> <span class="o">=</span> <span class="n">spotipy</span><span class="o">.</span><span class="n">Spotify</span><span class="p">(</span><span class="n">auth</span><span class="o">=</span><span class="n">token</span><span class="p">)</span>
+
+<span class="c"># Get track features</span>
+<span class="n">n_playlist0</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">PLAYLIST_0_LEN</span> <span class="o">/</span> <span class="n">LIMIT</span><span class="p">)</span>
+<span class="n">n_playlist1</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">PLAYLIST_1_LEN</span> <span class="o">/</span> <span class="n">LIMIT</span><span class="p">)</span>
+
+<span class="n">tracks_features0</span> <span class="o">=</span> <span class="n">get_track_features</span><span class="p">(</span><span class="s">'4B3qR5p6PD8nXXeq4C0Gz7'</span><span class="p">,</span> <span class="n">n_playlist0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">tracks_features1</span> <span class="o">=</span> <span class="n">get_track_features</span><span class="p">(</span><span class="s">'6Jpt5r9KD8FEUDioBFV0r0'</span><span class="p">,</span> <span class="n">n_playlist1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">tracks_features</span> <span class="o">=</span> <span class="n">tracks_features0</span> <span class="o">+</span> <span class="n">tracks_features1</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">'spotify-more2.csv'</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">tracks_features</span><span class="p">))</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">())</span>
+</code></pre></div></div>
+
+<hr style="height:2pt" />
+
+<h1 id="data-description">Data Description</h1>
+<p>Our data includes the following features:</p>
+<ul>
+  <li><code class="highlighter-rouge">danceability</code>: Danceability describes how suitable a track is for dancing based on a combination of musical elements including tempo, rhythm stability, beat strength, and overall regularity. A value of 0.0 is least danceable and 1.0 is most danceable.</li>
+  <li><code class="highlighter-rouge">energy</code>: Energy represents a perceptual measure of intensity and activity. Typically, energetic tracks feel fast, loud, and noisy. For example, death metal has high energy, while a Bach prelude scores low on the scale. Perceptual features contributing to this attribute include dynamic range, perceived loudness, timbre, onset rate, and general entropy. A value of 0.0 is least energetic and 1.0 is most energetic.</li>
+  <li><code class="highlighter-rouge">key</code>: The estimated overall key of the track. Integers map to pitches using standard Pitch Class Notation. E.g. 0 = C, 1 = C♯/D♭, 2 = D, and so on. If no key was detected, the value is -1.</li>
+  <li><code class="highlighter-rouge">loudness</code>: The overall loudness of a track in decibels (dB). Loudness values are averaged across the entire track and are useful for comparing relative loudness of tracks. Loudness is the quality of a sound that is the primary psychological correlate of physical strength (amplitude). Values range between -60 and 0 db.</li>
+  <li><code class="highlighter-rouge">mode</code>: Mode represents the modality (major or minor) of a track, the type of scale from which its melodic content is derived. Mode is binary; major is represented by 1 and minor is 0.</li>
+  <li><code class="highlighter-rouge">speechiness</code>: Speechiness detects the presence of spoken words in a track. The more exclusively speech-like the recording (e.g. talk show, audio book, poetry), the closer to 1.0 the attribute value. Values above 0.66 describe tracks that are probably made entirely of spoken words. Values between 0.33 and 0.66 describe tracks that may contain both music and speech, either in sections or layered, including such cases as rap music. Values below 0.33 most likely represent music and other non-speech-like tracks.</li>
+  <li><code class="highlighter-rouge">acousticness</code>: A confidence measure from 0.0 to 1.0 of whether the track is acoustic. 1.0 represents high confidence the track is acoustic.</li>
+  <li><code class="highlighter-rouge">instrumentalness</code>: Predicts whether a track contains no vocals. “Ooh” and “aah” sounds are treated as instrumental in this context. Rap or spoken word tracks are clearly “vocal”. The closer the instrumentalness value is to 1.0, the greater likelihood the track contains no vocal content. Values above 0.5 are intended to represent instrumental tracks, but confidence is higher as the value approaches 1.0.</li>
+  <li><code class="highlighter-rouge">liveness</code>: Detects the presence of an audience in the recording. Higher liveness values represent an increased probability that the track was performed live. A value above 0.8 provides strong likelihood that the track is live.</li>
+  <li><code class="highlighter-rouge">valence</code>: A measure from 0.0 to 1.0 describing the musical positiveness conveyed by a track. Tracks with high valence sound more positive (e.g. happy, cheerful, euphoric), while tracks with low valence sound more negative (e.g. sad, depressed, angry).</li>
+  <li><code class="highlighter-rouge">tempo</code>: The overall estimated tempo of a track in beats per minute (BPM). In musical terminology, tempo is the speed or pace of a given piece and derives directly from the average beat duration.</li>
+  <li><code class="highlighter-rouge">duration_ms</code>: The duration of the track in milliseconds.</li>
+  <li><code class="highlighter-rouge">time_signature</code>: An estimated overall time signature of a track. The time signature (meter) is a notational convention to specify how many beats are in each bar (or measure).</li>
+  <li><code class="highlighter-rouge">popularity</code>: The popularity of a track is a value between 0 and 100, with 100 being the most popular. The popularity is calculated by algorithm and is based, in the most part, on the total number of plays the track has had and how recent those plays are.Generally speaking, songs that are being played a lot now will have a higher popularity than songs that were played a lot in the past.</li>
+  <li><code class="highlighter-rouge">in_playlist</code>: Response variable. Categorical variable for whether in playlist of desire. 1 if in playlist, 0 if not in playlist.</li>
+</ul>
+
+<p>The following features were recorded to help with visualization later, but not used as predictors in our analysis, as they are not characteristics of the music itself.</p>
+<ul>
+  <li><code class="highlighter-rouge">name</code>: Song title</li>
+  <li><code class="highlighter-rouge">artist</code>: First artist of song</li>
+  <li><code class="highlighter-rouge">type</code>: The object type, always deemed ‘audio_features.’</li>
+  <li><code class="highlighter-rouge">id</code>: The Spotify ID for the track.</li>
+  <li><code class="highlighter-rouge">uri</code>: The Spotify URI for the track.</li>
+  <li><code class="highlighter-rouge">track_href</code>: A link to the Web API endpoint providing full details of the track.</li>
+  <li><code class="highlighter-rouge">analysis_url</code>: An HTTP URL to access the full audio analysis of this track. An access token is required to access this data.</li>
+</ul>
+
+<h1 id="exploratory-data-analysis">Exploratory Data Analysis</h1>
+
+<p>We have 5060 songs in our initial analysis. 2650 are included in Grace’s playlist, and 2500 are not included in Grace’s playlist.</p>
+
+<p>Below are summary statistics for all the features we plan to analyze:</p>
+
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>feature</th>
+      <th>mean</th>
+      <th>var</th>
+      <th>range</th>
+      <th>min</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>acousticness</td>
+      <td>0.540199</td>
+      <td>1.267884e-01</td>
+      <td>9.959953e-01</td>
+      <td>0.000005</td>
+      <td>0.996</td>
+    </tr>
+    <tr>
+      <td>danceability</td>
+      <td>0.570920</td>
+      <td>2.931912e-02</td>
+      <td>9.162000e-01</td>
+      <td>0.061800</td>
+      <td>0.978</td>
+    </tr>
+    <tr>
+      <td>duration_ms</td>
+      <td>245718.492885</td>
+      <td>1.911563e+10</td>
+      <td>3.346533e+06</td>
+      <td>44507.000000</td>
+      <td>3391040.000</td>
+    </tr>
+    <tr>
+      <td>energy</td>
+      <td>0.439224</td>
+      <td>6.633419e-02</td>
+      <td>9.901450e-01</td>
+      <td>0.000855</td>
+      <td>0.991</td>
+    </tr>
+    <tr>
+      <td>instrumentalness</td>
+      <td>0.143138</td>
+      <td>9.302492e-02</td>
+      <td>9.870000e-01</td>
+      <td>0.000000</td>
+      <td>0.987</td>
+    </tr>
+    <tr>
+      <td>key</td>
+      <td>5.223913</td>
+      <td>1.251578e+01</td>
+      <td>1.100000e+01</td>
+      <td>0.000000</td>
+      <td>11.000</td>
+    </tr>
+    <tr>
+      <td>liveness</td>
+      <td>0.163377</td>
+      <td>1.798945e-02</td>
+      <td>9.800000e-01</td>
+      <td>0.012000</td>
+      <td>0.992</td>
+    </tr>
+    <tr>
+      <td>loudness</td>
+      <td>-10.270219</td>
+      <td>3.464989e+01</td>
+      <td>4.217600e+01</td>
+      <td>-42.476000</td>
+      <td>-0.300</td>
+    </tr>
+    <tr>
+      <td>mode</td>
+      <td>0.650198</td>
+      <td>2.274856e-01</td>
+      <td>1.000000e+00</td>
+      <td>0.000000</td>
+      <td>1.000</td>
+    </tr>
+    <tr>
+      <td>popularity</td>
+      <td>36.977470</td>
+      <td>4.773025e+02</td>
+      <td>1.000000e+02</td>
+      <td>0.000000</td>
+      <td>100.000</td>
+    </tr>
+    <tr>
+      <td>speechiness</td>
+      <td>0.070655</td>
+      <td>6.217856e-03</td>
+      <td>8.989000e-01</td>
+      <td>0.023100</td>
+      <td>0.922</td>
+    </tr>
+    <tr>
+      <td>tempo</td>
+      <td>117.657563</td>
+      <td>8.604272e+02</td>
+      <td>1.790410e+02</td>
+      <td>42.581000</td>
+      <td>221.622</td>
+    </tr>
+    <tr>
+      <td>time_signature</td>
+      <td>3.919763</td>
+      <td>1.655315e-01</td>
+      <td>5.000000e+00</td>
+      <td>0.000000</td>
+      <td>5.000</td>
+    </tr>
+    <tr>
+      <td>valence</td>
+      <td>0.425801</td>
+      <td>5.455384e-02</td>
+      <td>9.591000e-01</td>
+      <td>0.025900</td>
+      <td>0.985</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>We can see that all features have values that are expected as per the Spotify API documentation. 
+To analyze each feature in more granularity we looked at density plots.</p>
+
+<p><img src="/final_notebook/output_18_0.png" alt="png" /></p>
+
+<p>Looking at the density plots above, we note some features that show clear differences in distribution between the playlist and non-playlist. 
+While non-playlist songs contain a roughly uniform distribution of energy values, playlist songs spike at an energy level between 0.2-0.4.
+Acousticness in playlist tracks is much higher on average, spiking around 0.8, while non-playlist tracks most frequently have acousticness values around 0.1.
+Instrumentalness is a particularly interesting feature. While the distribution non-playlist tracks is bimodal, peaking at around 0 and 0.9, playlist tracks have a few very well-defined peaks between 0 and 0.3. 
+We will note in advance that this may induce a risk of overfitting based on instrumentalness values.
+Playlist tracks have lower loudnesses on average, centering around -10, while non-playlist tracks -5.
+In terms of speechiness, the distribution for playlist tracks has a much lower variance and slightly lower expected value, centering around 0.3 while non-playlist tracks center around 0.4.
+Valence for non-playlist tracks is roughly uniformly distributed, while playlist tracks demonstrate a roughly normal distribution centered around 0.3.
+Finally in terms of popularity, playlist tracks show a peak in their distribution around 60, while non-playlist tracks have a more variable distribution with a peak between 45-55.
+The rest of the features are roughly similar in distribution between playlist and non-playlist tracks.</p>
+
+<p><img src="/final_notebook/output_20_1.png" alt="png" /></p>
+
+<p>The pairplot above demonstrates a few interesting things. First, we notice weakly positive correlations between loudness and energy, loudness and danceability, and danceablility and loudness. We also notice a negative correlation between acousticness and energy. These correlations will be useful to keep in mind if we conduct variable selection or regularization at a later point. Also, none of these pairwise plots show clear separability between the two playlists.</p>
+
+
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</html>
