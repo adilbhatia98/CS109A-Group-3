@@ -295,16 +295,26 @@ header {
 
 <h1 id="exploratory-data-analysis">Exploratory Data Analysis</h1>
 
-<p></p>
+<p>We did an initial analysis of some keywords, as shown in our notebook. The list is 
+	['trade', 'Trade', 'deal', 'products', 'manufacturing', 'China', 'Xi', 'Xi Jinping', 'CCP', 'Communist Party', 
+	'Beijing']`. Approximately 1/10 of Trump’s tweets that we cleaned (of ~14,000 total) contain some combination of 
+	these keywords. As we see above, the majority of the 'keywords' (based on our initial keyword list) appearing in 
+	our data are trade, Trade, deal, China, and Xi (products and manufacturing not far behind). CCP, Communist Party, 
+	and Beijing do not show up that frequently. In the future, we will probably employ functionality to search for the 
+	most frequently appearing useful words (excludes articles, punctuation, etc.). The histogram is reproduced below:</p>
 
 <div class="output_png output_subarea ">
 <img src="output_13_0.png">
 </div>	
 	
-<p>Below are summary statistics for all the features we plan to analyze:</p>
+<p>INSERT EDA FOR TWITTER DATA USING TEXTBLOB ANALYSIS - SEE TRENDS IN SENTIMENT SCORES</p>
 
+<p>Next, we examine the VIX data. Below are summary statistics for the data we were able to pull and consolidate from 
+	Bloomberg.</p>	
+	
+<div class="output_html rendered_html output_subarea output_execute_result">
 <div>
-<style scoped="">
+<style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
@@ -320,135 +330,208 @@ header {
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
-      <th>feature</th>
-      <th>mean</th>
-      <th>var</th>
-      <th>range</th>
-      <th>min</th>
-      <th>max</th>
+      <th></th>
+      <th>Last Price</th>
+      <th>price_delta</th>
+      <th>price_delta_5</th>
+      <th>24_hr_perc</th>
+      <th>7_day_perc</th>
+      <th>14_day_perc</th>
+      <th>30_day_perc</th>
+      <th>52_week_high</th>
+      <th>52_week_perc</th>
+      <th>vix_delta_sign</th>
+      <th>year</th>
+      <th>month</th>
+      <th>hour</th>
+      <th>minutes</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>acousticness</td>
-      <td>0.540199</td>
-      <td>1.267884e-01</td>
-      <td>9.959953e-01</td>
-      <td>0.000005</td>
-      <td>0.996</td>
+      <th>count</th>
+      <td>722237.000000</td>
+      <td>722237.000000</td>
+      <td>722237.000000</td>
+      <td>721833.000000</td>
+      <td>719409.000000</td>
+      <td>716581.000000</td>
+      <td>710294.000000</td>
+      <td>676514.000000</td>
+      <td>676514.000000</td>
+      <td>722236.000000</td>
+      <td>722237.000000</td>
+      <td>722237.000000</td>
+      <td>722237.000000</td>
+      <td>722237.00000</td>
     </tr>
     <tr>
-      <td>danceability</td>
-      <td>0.570920</td>
-      <td>2.931912e-02</td>
-      <td>9.162000e-01</td>
-      <td>0.061800</td>
-      <td>0.978</td>
+      <th>mean</th>
+      <td>14.738460</td>
+      <td>-0.000022</td>
+      <td>-0.000087</td>
+      <td>0.001939</td>
+      <td>0.010396</td>
+      <td>0.016207</td>
+      <td>0.022988</td>
+      <td>38.205824</td>
+      <td>0.399478</td>
+      <td>0.000267</td>
+      <td>2017.472323</td>
+      <td>6.566354</td>
+      <td>9.413017</td>
+      <td>594.44071</td>
     </tr>
     <tr>
-      <td>duration_ms</td>
-      <td>245718.492885</td>
-      <td>1.911563e+10</td>
-      <td>3.346533e+06</td>
-      <td>44507.000000</td>
-      <td>3391040.000</td>
+      <th>std</th>
+      <td>4.103039</td>
+      <td>0.062353</td>
+      <td>0.125227</td>
+      <td>0.067065</td>
+      <td>0.163789</td>
+      <td>0.218262</td>
+      <td>0.275639</td>
+      <td>11.517582</td>
+      <td>0.103463</td>
+      <td>0.355108</td>
+      <td>1.113672</td>
+      <td>3.335537</td>
+      <td>3.796773</td>
+      <td>226.93971</td>
     </tr>
     <tr>
-      <td>energy</td>
-      <td>0.439224</td>
-      <td>6.633419e-02</td>
-      <td>9.901450e-01</td>
-      <td>0.000855</td>
-      <td>0.991</td>
+      <th>min</th>
+      <td>8.910000</td>
+      <td>-12.690000</td>
+      <td>-12.730000</td>
+      <td>-0.430000</td>
+      <td>-0.560000</td>
+      <td>-0.610000</td>
+      <td>-0.610000</td>
+      <td>17.280000</td>
+      <td>0.210000</td>
+      <td>-1.000000</td>
+      <td>2015.000000</td>
+      <td>1.000000</td>
+      <td>3.000000</td>
+      <td>195.00000</td>
     </tr>
     <tr>
-      <td>instrumentalness</td>
-      <td>0.143138</td>
-      <td>9.302492e-02</td>
-      <td>9.870000e-01</td>
+      <th>25%</th>
+      <td>11.910000</td>
+      <td>-0.010000</td>
+      <td>-0.030000</td>
+      <td>-0.030000</td>
+      <td>-0.080000</td>
+      <td>-0.100000</td>
+      <td>-0.130000</td>
+      <td>26.720000</td>
+      <td>0.330000</td>
       <td>0.000000</td>
-      <td>0.987</td>
+      <td>2017.000000</td>
+      <td>4.000000</td>
+      <td>6.000000</td>
+      <td>395.00000</td>
     </tr>
     <tr>
-      <td>key</td>
-      <td>5.223913</td>
-      <td>1.251578e+01</td>
-      <td>1.100000e+01</td>
+      <th>50%</th>
+      <td>13.680000</td>
       <td>0.000000</td>
-      <td>11.000</td>
-    </tr>
-    <tr>
-      <td>liveness</td>
-      <td>0.163377</td>
-      <td>1.798945e-02</td>
-      <td>9.800000e-01</td>
-      <td>0.012000</td>
-      <td>0.992</td>
-    </tr>
-    <tr>
-      <td>loudness</td>
-      <td>-10.270219</td>
-      <td>3.464989e+01</td>
-      <td>4.217600e+01</td>
-      <td>-42.476000</td>
-      <td>-0.300</td>
-    </tr>
-    <tr>
-      <td>mode</td>
-      <td>0.650198</td>
-      <td>2.274856e-01</td>
-      <td>1.000000e+00</td>
       <td>0.000000</td>
-      <td>1.000</td>
-    </tr>
-    <tr>
-      <td>popularity</td>
-      <td>36.977470</td>
-      <td>4.773025e+02</td>
-      <td>1.000000e+02</td>
       <td>0.000000</td>
-      <td>100.000</td>
-    </tr>
-    <tr>
-      <td>speechiness</td>
-      <td>0.070655</td>
-      <td>6.217856e-03</td>
-      <td>8.989000e-01</td>
-      <td>0.023100</td>
-      <td>0.922</td>
-    </tr>
-    <tr>
-      <td>tempo</td>
-      <td>117.657563</td>
-      <td>8.604272e+02</td>
-      <td>1.790410e+02</td>
-      <td>42.581000</td>
-      <td>221.622</td>
-    </tr>
-    <tr>
-      <td>time_signature</td>
-      <td>3.919763</td>
-      <td>1.655315e-01</td>
-      <td>5.000000e+00</td>
+      <td>-0.010000</td>
+      <td>-0.020000</td>
+      <td>-0.020000</td>
+      <td>36.200000</td>
+      <td>0.400000</td>
       <td>0.000000</td>
-      <td>5.000</td>
+      <td>2017.000000</td>
+      <td>7.000000</td>
+      <td>10.000000</td>
+      <td>610.00000</td>
     </tr>
     <tr>
-      <td>valence</td>
-      <td>0.425801</td>
-      <td>5.455384e-02</td>
-      <td>9.591000e-01</td>
-      <td>0.025900</td>
-      <td>0.985</td>
+      <th>75%</th>
+      <td>16.580000</td>
+      <td>0.010000</td>
+      <td>0.030000</td>
+      <td>0.030000</td>
+      <td>0.070000</td>
+      <td>0.090000</td>
+      <td>0.110000</td>
+      <td>50.300000</td>
+      <td>0.450000</td>
+      <td>0.000000</td>
+      <td>2018.000000</td>
+      <td>9.000000</td>
+      <td>13.000000</td>
+      <td>791.00000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>50.200000</td>
+      <td>8.570000</td>
+      <td>8.520000</td>
+      <td>1.490000</td>
+      <td>2.570000</td>
+      <td>3.320000</td>
+      <td>3.920000</td>
+      <td>53.290000</td>
+      <td>1.000000</td>
+      <td>1.000000</td>
+      <td>2019.000000</td>
+      <td>12.000000</td>
+      <td>16.000000</td>
+      <td>974.00000</td>
     </tr>
   </tbody>
 </table>
 </div>
+</div>
 
-<p>We can see that all features have values that are expected as per the Spotify API documentation. 
-To analyze each feature in more granularity we looked at density plots.</p>
 
-<p><img src="/final_notebook/output_18_0.png" alt="png"></p>
+
+<p>Just based on the above, we can see a pretty large range in the values of the VIX, 
+	suggesting that the pricing jumps around a lot. At the same time, though, we see that on a minute by minute basis,
+	the price change is very small. We keep this in mind when developing our models because even though are outcome is price
+	delta, we experiment with different time intervals over which that delta is calculated to see which model will be most 
+	useful. </p>
+	  
+<p>Additionally, in our EDA, we looked at a snippet of the VIX pricing data. Our thought process was before diving into 
+	any analysis, we should first determine when the VIX rose or fell significantly and see if those changes appear 
+	to be related to any significant news events around those times. Our initial graph of the VIX data looks at EOD VIX 
+	pricing over a set period of time (December 1, 2015 - December 1, 2016). (Our analysis will hone in on minute by 
+	minute, but for us, it is important to be aware of the major surges). This graph is not reproduced below because of 
+	its size, but it can be seen in the notebook (title: “VIX Pricing over time”). The following were the main surges 
+	during this time period:
+<li>
+	<ul>12/11/15</ul>
+	<ul>1/19/16</ul>
+	<ul>2/11/16</ul>
+	<ul>6/14/16</ul> 
+	<ul>6/27/16</ul>
+	<ul>9/12/16</ul>
+	<ul>Two weeks before 2016 Presidential elections and a week afterwards</ul>
+</li>
+	
+For each date, we cross referenced it with the Financial Times Archives for the few days before and a few days after. 
+Note: VIX is incredibly volatile, where for most metrics/indices a 3-4% change on any given day is regarded as a big move, 
+such changes are the norm for VIX. Thus explaining any major surge due to one event remains challenging, yet for a high 
+level understanding, we believe it to be necessary. 
+<li>
+	<ul>Oil Prices Reaching Seven Year Lows</ul>
+	<ul>Wall St. makes worst start to year, global bearishness, oil resumes slide, Fed might raise interest rates again</ul>
+	<ul>Very mixed news, articles suggest renewed China risks due to China’s unruly peer-to-peer lending — 21 people arrested involved in “a complete Ponzi scheme” — ballooned in size last year as credit-starved private companies paid swingeing interest rates to secure loans </ul>
+	<ul>Weak jobs data, major uncertainty regarding Fed hiking interest rates</ul> 
+	<ul>Post-Brexit jitters</ul>
+	<ul>Oil price hikes, Merkel loses major state election in response to her open-door refugee policy</ul>
+	<ul>Three major moves: first, as polling data shows narrowing of Clinton’s lead, the VIX continuously climbs, one of its more significant spikes being the day Fed reopened the investigation into her emails, secondly, one of VIX’s more significant downturns (though, still mild relative to the climbs of the previous weeks) was when the investigation was officially closed, and thirdly when Trump won, the VIX surged upwards, only to calm the day after when trading resumed, which was the exact trend following the Brexit vote. </ul>
+</li>
+
+<p>Note that the moves above are not directly related to Trump's tweets, but they did give us a sense for how striking news could
+	affect VIX pricing on a minute by minute basis.</p>
+
+<p><img src="output_25_0.png"></p>
 
 <p>Looking at the density plots above, we note some features that show clear differences in distribution between the playlist and non-playlist. 
 While non-playlist songs contain a roughly uniform distribution of energy values, playlist songs spike at an energy level between 0.2-0.4.
