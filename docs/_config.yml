@@ -1,0 +1,15 @@
+theme: jekyll-theme-primer
+title: Spotify You
+description: Generate YOUR Spotify playlist
+baseurl:
+markdown: kramdown
+kramdown:
+    math_engine: mathjax
+    input: GFM
+    syntax_highlighter: rouge
+remote_theme: pmarsceill/just-the-docs # andrewbanchich/forty-jekyll-theme # #Simpleyyt/jekyll-jacman #alexanderussell/progress-for-jekyll/ 
+search_enabled: true
+exclude: ["*.json", "*.csv", "*.ipynb", "*.pdf", "papers/", "*.gemspec", "*.gem", "Gemfile", "Gemfile.lock", "package.json", "script/", "LICENSE.txt", "lib/", "bin/", "README.md", "Rakefile"]
+aux_links:
+  "Spotify You on GitHub":
+      - "//github.com/gzgracez/CS-109A-Final-Project"
