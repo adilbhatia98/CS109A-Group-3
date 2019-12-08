@@ -160,8 +160,9 @@ The following features were recorded to help with visualization later, but not u
 
 # Exploratory Data Analysis
 
-
 We have 5060 songs in our initial analysis. 2650 are included in Grace's playlist, and 2500 are not included in Grace's playlist. 
+
+![png](output_13_0.png)
 
 Below are summary statistics for all the features we plan to analyze:
 
