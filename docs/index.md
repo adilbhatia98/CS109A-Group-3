@@ -40,9 +40,9 @@ We are Gaurang Goel, Yashvardhan Bardoloi, and Adil Bhatia, Group 3 in CS109A, F
 Special thanks to Robbert Struyven and James Zeitler for their assistance.
 
 <div style="text-align: center">
-	<img src="gaurang.jpeg" width="40%">
-	<img src="yash.jpeg" width="40%">
-	<img src="adil.jpeg" width="40%">
-	<img src="trump.png" width="40%">
+	<img src="gaurang.jpg" width="40%">
+	<img src="yash.jpg" width="40%">
+	<img src="adil.jpg" width="40%">
+	<img src="trump.jpg" width="40%">
 </div>
 
