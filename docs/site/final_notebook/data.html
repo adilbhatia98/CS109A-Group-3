@@ -219,11 +219,6 @@ header {
 	
 <h2 id="consolidate">Consolidated Data</h2>
 
-<p>To consolidate the Twitter and VIX data into </p>
-<p>VIX is managed by CBOE (Chicago Board Options Exchange). The global trading hours for VIX can be found 
-	<a href="https://www.cboe.com/micro/eth/pdf/global-trading-hours.pdf">here</a>. Trading hours range from 3:15 am EST until
-	4:15 pm EST. There is a break bewteen 9:15 and 9:30 am, but this is addressed in how we consolidate our data.</p>
-
 <p> In order to consolidate the data, we merge our Twitter and VIX dataframes on date/time to ensure that we are only looking
 	at tweets that are posted during VIX trading hours. That way, we do not have to worry about tweets occurring outside
 	these hours. Also, when we look at the change in VIX price, we are only looking at changes during trading hours, so
