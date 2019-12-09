@@ -1,6 +1,6 @@
 theme: jekyll-theme-primer
-title: Spotify You
-description: Generate YOUR Spotify playlist
+title: Trump Tweet VIX
+description: Predcit VIX Changes Using Trump Tweets
 baseurl:
 markdown: kramdown
 kramdown:
@@ -11,5 +11,5 @@ remote_theme: pmarsceill/just-the-docs # andrewbanchich/forty-jekyll-theme # #Si
 search_enabled: true
 exclude: ["*.json", "*.csv", "*.ipynb", "*.pdf", "papers/", "*.gemspec", "*.gem", "Gemfile", "Gemfile.lock", "package.json", "script/", "LICENSE.txt", "lib/", "bin/", "README.md", "Rakefile"]
 aux_links:
-  "Spotify You on GitHub":
-      - "//github.com/gzgracez/CS-109A-Final-Project"
+  "Trump Tweet VIX":
+      - "//github.com/adilbhatia98/CS109A-Group-3"
