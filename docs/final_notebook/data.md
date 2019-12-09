@@ -84,7 +84,7 @@ We pulled all of Trump's tweets in the last few years from his Twitter archive. 
 + Adjusting GMT to Eastern Time + accounting for daylight savings
 + Manually fixing errors in cells where the delimiting was incorrectly done in the database output and manually re-inserting the delimiting character
 	
-We utilized `ntlk</code`'s `textblob` function in order to analyze the sentiment of tweets in our data set. For each tweet, this function created a polarity score (the more positive a tweet is, the closer the score is to 1; the more negative, the closer it is to -1). The function also returns a subjectivity score. Lower subjectivity score means that the tweet's polarity score more objectively represents its sentiment.
+We utilized `ntlk`'s `textblob` function in order to analyze the sentiment of tweets in our data set. For each tweet, this function created a polarity score (the more positive a tweet is, the closer the score is to 1; the more negative, the closer it is to -1). The function also returns a subjectivity score. Lower subjectivity score means that the tweet's polarity score more objectively represents its sentiment.
 
 ## VIX
 VIX is the first benchmark index to measure expectations of future market volatility 
