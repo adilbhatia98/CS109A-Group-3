@@ -11,5 +11,5 @@ remote_theme: pmarsceill/just-the-docs # andrewbanchich/forty-jekyll-theme # #Si
 search_enabled: true
 exclude: ["*.json", "*.csv", "*.ipynb", "*.pdf", "papers/", "*.gemspec", "*.gem", "Gemfile", "Gemfile.lock", "package.json", "script/", "LICENSE.txt", "lib/", "bin/", "README.md", "Rakefile"]
 aux_links:
-  "Trump Tweet VIX":
+  "Trump Tweet VIX on Github":
       - "//github.com/adilbhatia98/CS109A-Group-3"
