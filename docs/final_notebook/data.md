@@ -361,21 +361,20 @@ Next, we examine the VIX data. Below are summary statistics for the data we were
 	its size, but it can be seen in the notebook (title: “VIX Pricing over time”). The following were the main surges 
 	during this time period:</p>
 	
-<li>
-	<ul>Oil Prices Reaching Seven Year Lows</ul>
-	<ul>Wall St. makes worst start to year, global bearishness, oil resumes slide, Fed might raise interest rates again</ul>
-	<ul>Very mixed news, articles suggest renewed China risks due to China’s unruly peer-to-peer lending — 21 people arrested involved in “a complete Ponzi scheme” — ballooned in size last year as credit-starved private companies paid swingeing interest rates to secure loans </ul>
-	<ul>Weak jobs data, major uncertainty regarding Fed hiking interest rates</ul> 
-	<ul>Post-Brexit jitters</ul>
-	<ul>Oil price hikes, Merkel loses major state election in response to her open-door refugee policy</ul>
-	<ul>Three major moves: first, as polling data shows narrowing of Clinton’s lead, the VIX continuously climbs, one of its more significant spikes being the day Fed reopened the investigation into her emails, secondly, one of VIX’s more significant downturns (though, still mild relative to the climbs of the previous weeks) was when the investigation was officially closed, and thirdly when Trump won, the VIX surged upwards, only to calm the day after when trading resumed, which was the exact trend following the Brexit vote. </ul>
-</li>
+<ul>
+	<li>12/11/15</li>
+	<li>1/19/16</li>
+	<li>2/11/16</li>
+	<li>6/14/16</li> 
+	<li>6/27/16</li>
+	<li>9/12/16</li>
+	<li>Two weeks before 2016 Presidential elections and a week afterwards</li>
+</ul>
 	
-For each date, we cross referenced it with the Financial Times Archives for the few days before and a few days after. 
+<p>For each date, we cross referenced it with the Financial Times Archives for the few days before and a few days after. 
 Note: VIX is incredibly volatile, where for most metrics/indices a 3-4% change on any given day is regarded as a big move, 
 such changes are the norm for VIX. Thus explaining any major surge due to one event remains challenging, yet for a high 
-level understanding, we believe it to be necessary. 
-
+level understanding, we believe it to be necessary.</p>
 	+ Oil Prices Reaching Seven Year Lows
 	+ Wall St. makes worst start to year, global bearishness, oil resumes slide, Fed might raise interest rates again
 	+ Very mixed news, articles suggest renewed China risks due to China’s unruly peer-to-peer lending — 21 people arrested involved in “a complete Ponzi scheme” — ballooned in size last year as credit-starved private companies paid swingeing interest rates to secure loans
