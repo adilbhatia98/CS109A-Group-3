@@ -14,16 +14,31 @@ nav_order: 4
 
 ---
 
-Our goal for this project is to construct a list of songs from a new list of songs that Grace would like to add to her existing playlist. We attempt to do this by training a variety of different models to predict whether or not a song should be included in Grace's playlist. By framing the question in this way, we recognize that playlist construction can be considered from a classification perspective, where we need to classify each song in our test set as either being `in_playlist` or not `in_playlist`.
-
 # Setup
 
-We first split our data into a train and test set, so that we are later able to assess how well our model performs in both a train set and a not-seen test set.
+<p>Our goal for this project is to build a model that can accurately predict changes in VIX prices after Trump tweets. In the model, we use characteristics of the VIX data (like <code class="highlighter-rouge">Last Price</code>) and multiple characteristics of the Twitter data. Also, some predictors are common to both datasets, such as date/time predictors.</p>
+          
+<p>Based on these predictors, we initially considered two types of models. First, we considered one that predicts absolute price changes in VIX pricing (continuous outcome). Second, we considered one that predicts the sign of VIX pricing changes (positive, negative, or no change - a categorical outcome). We also wanted to create interval versions of each of these types of models that looks at the VIX price change over 1 minute, 5, 10, 20 , 30, and 60 minutes. We wanted to consider all these options to determine the most accurate and most useful model.</p>  
 
+<p>We first split our data into a train and test set, so that we are later able to assess how well our model performs in both a train set and a not-seen test set. Realistically, training accuracy reflects how well a given model 'understands' the data it is presented with, and testing accuracy reflects how well that model can be generalized to accurately form predictions about data it has not yet seen. </p>
+          
 ```python
-train, test = train_test_split(spotify_df, test_size = 0.2, random_state=50)
-x_train, y_train = train.drop(columns=[response_col]), train[response_col].values
-x_test, y_test = test.drop(columns=[response_col]), test[response_col].values
+# split discrete
+X_train0, X_test0, y_train0, y_test0 = train_test_split(model_data_0.loc[:, model_data_0.columns != 'price_delta'], 
+                                                         model_data_0['price_delta'], test_size=0.2)
+
+X_train5, X_test5, y_train5, y_test5 = train_test_split(model_data_5.loc[:, model_data_5.columns != 'price_delta_5'], 
+                                                         model_data_5['price_delta_5'], test_size=0.2)
+
+X_train10, X_test10, y_train10, y_test10 = train_test_split(model_data_10.loc[:, model_data_10.columns != 'price_delta_10'], 
+                                                         model_data_10['price_delta_10'], test_size=0.2)
+
+X_train20, X_test20, y_train20, y_test20 = train_test_split(model_data_20.loc[:, model_data_20.columns != 'price_delta_20'], 
+                                                         model_data_20['price_delta_20'], test_size=0.2)
+
+X_train30, X_test30, y_train30, y_test30 = train_test_split(model_data_30.loc[:, model_data_30.columns != 'price_delta_30'], 
+                                                         model_data_30['price_delta_30'], test_size=0.2)
+
 ```
 
 # Baseline Model
