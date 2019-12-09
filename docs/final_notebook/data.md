@@ -164,6 +164,10 @@ We did an initial analysis of some keywords, as shown in our notebook. The list 
 
 ![png](output_13_0.png)
 
+<div class="output_png output_subarea ">
+<img src="output_13_0.png">
+</div>	
+
 Below are summary statistics for all the features we plan to analyze:
 
 
