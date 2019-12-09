@@ -359,7 +359,7 @@ Next, we examine the VIX data. Below are summary statistics for the data we were
 	pricing over a set period of time (December 1, 2015 - December 1, 2016). (Our analysis will hone in on minute by 
 	minute, but for us, it is important to be aware of the major surges). This graph is not reproduced below because of 
 	its size, but it can be seen in the notebook (title: “VIX Pricing over time”). The following were the main surges 
-	during this time period:
+	during this time period:</p>
 <li>
 	<ul>12/11/15</ul>
 	<ul>1/19/16</ul>
