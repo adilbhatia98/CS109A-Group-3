@@ -131,18 +131,48 @@
 
 <hr />
 
-<p>Our goal for this project is to construct a list of songs from a new list of songs that Grace would like to add to her existing playlist. We attempt to do this by training a variety of different models to predict whether or not a song should be included in Grace’s playlist. By framing the question in this way, we recognize that playlist construction can be considered from a classification perspective, where we need to classify each song in our test set as either being <code class="highlighter-rouge">in_playlist</code> or not <code class="highlighter-rouge">in_playlist</code>.</p>
-
 <h1 id="setup">Setup</h1>
+       
+<p>Our goal for this project is to build a model that can accurately predict changes in VIX prices after Trump tweets. In the model, we use characteristics of the VIX data (like <code class="highlighter-rouge">Last Price</code>) and multiple characteristics of the Twitter data. Also, some predictors are common to both datasets, such as date/time predictors.</p>
+          
+<p>Based on these predictors, we initially considered two types of models. First, we considered one that predicts absolute price changes in VIX pricing (continuous outcome). Second, we considered one that predicts the sign of VIX pricing changes (positive, negative, or no change - a categorical outcome). We also wanted to create interval versions of each of these types of models that looks at the VIX price change over 1 minute, 5, 10, 20 , 30, and 60 minutes. We wanted to consider all these options to determine the most accurate and most useful model.</p>  
 
-<p>We first split our data into a train and test set, so that we are later able to assess how well our model performs in both a train set and a not-seen test set.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">spotify_df</span><span class="p">,</span> <span class="n">test_size</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
-<span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span> <span class="o">=</span> <span class="n">train</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">response_col</span><span class="p">]),</span> <span class="n">train</span><span class="p">[</span><span class="n">response_col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-<span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">response_col</span><span class="p">]),</span> <span class="n">test</span><span class="p">[</span><span class="n">response_col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-</code></pre></div></div>
-
+<p>We first split our data into a train and test set, so that we are later able to assess how well our model performs in both a train set and a not-seen test set. Realistically, training accuracy reflects how well a given model 'understands' the data it is presented with, and testing accuracy reflects how well that model can be generalized to accurately form predictions about data it has not yet seen. </p>
+          
+          
 <h1 id="baseline-model">Baseline Model</h1>
+
+<p>To start, we created a baseline linear model using all our predictors with a continuos outcome variable, <code class="highlighter-rouge">price_delta_i</code> where i indicates the time interval we are looking at. Unfortunately, the accuracy scores for train and test are extremely low for these models, as shown below (only up through 30 shown for concision).</p>
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[75]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># split discrete</span>
+<span class="n">X_train0</span><span class="p">,</span> <span class="n">X_test0</span><span class="p">,</span> <span class="n">y_train0</span><span class="p">,</span> <span class="n">y_test0</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">model_data_0</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">model_data_0</span><span class="o">.</span><span class="n">columns</span> <span class="o">!=</span> <span class="s1">&#39;price_delta&#39;</span><span class="p">],</span> 
+                                                         <span class="n">model_data_0</span><span class="p">[</span><span class="s1">&#39;price_delta&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="n">X_train5</span><span class="p">,</span> <span class="n">X_test5</span><span class="p">,</span> <span class="n">y_train5</span><span class="p">,</span> <span class="n">y_test5</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">model_data_5</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">model_data_5</span><span class="o">.</span><span class="n">columns</span> <span class="o">!=</span> <span class="s1">&#39;price_delta_5&#39;</span><span class="p">],</span> 
+                                                         <span class="n">model_data_5</span><span class="p">[</span><span class="s1">&#39;price_delta_5&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="n">X_train10</span><span class="p">,</span> <span class="n">X_test10</span><span class="p">,</span> <span class="n">y_train10</span><span class="p">,</span> <span class="n">y_test10</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">model_data_10</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">model_data_10</span><span class="o">.</span><span class="n">columns</span> <span class="o">!=</span> <span class="s1">&#39;price_delta_10&#39;</span><span class="p">],</span> 
+                                                         <span class="n">model_data_10</span><span class="p">[</span><span class="s1">&#39;price_delta_10&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="n">X_train20</span><span class="p">,</span> <span class="n">X_test20</span><span class="p">,</span> <span class="n">y_train20</span><span class="p">,</span> <span class="n">y_test20</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">model_data_20</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">model_data_20</span><span class="o">.</span><span class="n">columns</span> <span class="o">!=</span> <span class="s1">&#39;price_delta_20&#39;</span><span class="p">],</span> 
+                                                         <span class="n">model_data_20</span><span class="p">[</span><span class="s1">&#39;price_delta_20&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+
+<span class="n">X_train30</span><span class="p">,</span> <span class="n">X_test30</span><span class="p">,</span> <span class="n">y_train30</span><span class="p">,</span> <span class="n">y_test30</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">model_data_30</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">model_data_30</span><span class="o">.</span><span class="n">columns</span> <span class="o">!=</span> <span class="s1">&#39;price_delta_30&#39;</span><span class="p">],</span> 
+                                                         <span class="n">model_data_30</span><span class="p">[</span><span class="s1">&#39;price_delta_30&#39;</span><span class="p">],</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+          
+          
 
 <p>We began our project by first constructing a baseline model - one where we simply predict that all songs should be included in our existing playlist. 
 This serves as a good source of comparison for our future models, which should at least do better than this trivial one.</p>
