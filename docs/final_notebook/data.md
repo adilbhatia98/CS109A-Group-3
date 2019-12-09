@@ -360,15 +360,30 @@ Next, we examine the VIX data. Below are summary statistics for the data we were
 	minute, but for us, it is important to be aware of the major surges). This graph is not reproduced below because of 
 	its size, but it can be seen in the notebook (title: “VIX Pricing over time”). The following were the main surges 
 	during this time period:</p>
-	<ul>12/11/15</ul>
-	<ul>1/19/16</ul>
-	<ul>2/11/16</ul>
-	<ul>6/14/16</ul> 
-	<ul>6/27/16</ul>
-	<ul>9/12/16</ul>
-	<ul>Two weeks before 2016 Presidential elections and a week afterwards</ul>
+	+ 12/11/15
+	+ 1/19/16
+	+ 2/11/16
+	+ 6/14/16
+	+ 6/27/16
+	+ 9/12/16
+	+ Two weeks before 2016 Presidential elections and a week afterwards
+	
+For each date, we cross referenced it with the Financial Times Archives for the few days before and a few days after. 
+Note: VIX is incredibly volatile, where for most metrics/indices a 3-4% change on any given day is regarded as a big move, 
+such changes are the norm for VIX. Thus explaining any major surge due to one event remains challenging, yet for a high 
+level understanding, we believe it to be necessary. 
 
-![png](output_25_0.png)
+	+ Oil Prices Reaching Seven Year Lows
+	+ Wall St. makes worst start to year, global bearishness, oil resumes slide, Fed might raise interest rates again
+	+ Very mixed news, articles suggest renewed China risks due to China’s unruly peer-to-peer lending — 21 people arrested involved in “a complete Ponzi scheme” — ballooned in size last year as credit-starved private companies paid swingeing interest rates to secure loans
+	+ Weak jobs data, major uncertainty regarding Fed hiking interest rates
+	+ Post-Brexit jitters
+	+ Oil price hikes, Merkel loses major state election in response to her open-door refugee policy
+	+ Three major moves: first, as polling data shows narrowing of Clinton’s lead, the VIX continuously climbs, one of its more significant spikes being the day Fed reopened the investigation into her emails, secondly, one of VIX’s more significant downturns (though, still mild relative to the climbs of the previous weeks) was when the investigation was officially closed, and thirdly when Trump won, the VIX surged upwards, only to calm the day after when trading resumed, which was the exact trend following the Brexit vote.
+
+<p>Note that the moves above are not directly related to Trump's tweets, but they did give us a sense for how striking news could affect VIX pricing on a minute by minute basis.</p>
+
+<p><img src="output_25_0.png"></p>
 
 
 Looking at the density plots above, we note some features that show clear differences in distribution between the playlist and non-playlist. 
