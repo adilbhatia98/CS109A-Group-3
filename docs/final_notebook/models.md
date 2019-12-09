@@ -23,7 +23,7 @@ nav_order: 4
 <p>We first split our data into a train and test set, so that we are later able to assess how well our model performs in both a train set and a not-seen test set. Realistically, training accuracy reflects how well a given model 'understands' the data it is presented with, and testing accuracy reflects how well that model can be generalized to accurately form predictions about data it has not yet seen. </p>
           
 ```python
-# split discrete
+# split continuous outcome
 X_train0, X_test0, y_train0, y_test0 = train_test_split(model_data_0.loc[:, model_data_0.columns != 'price_delta'], 
                                                          model_data_0['price_delta'], test_size=0.2)
 
@@ -40,6 +40,17 @@ X_train30, X_test30, y_train30, y_test30 = train_test_split(model_data_30.loc[:,
                                                          model_data_30['price_delta_30'], test_size=0.2)
 
 ```
+
+    Training Accuracy 1 min: 0.44976265236774127
+    Testing Accuracy 1 min: 0.5888792939459038
+    Training Accuracy 5 min: 0.0201870869906412
+    Testing Accuracy 5 min: -0.030266895778277236
+    Training Accuracy 10 min: 0.004539964443405431
+    Testing Accuracy 10 min: -0.00020103491148715236
+    Training Accuracy 20 min: 0.013453791918044187
+    Testing Accuracy 20 min: -0.005352697343854018
+    Training Accuracy 30 min: 0.007959329834883788
+    Testing Accuracy 30 min: -0.012027684215839551
 
 # Baseline Model
 
