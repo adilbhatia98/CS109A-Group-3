@@ -26,6 +26,7 @@ We utilized Trump's Twitter archive [here](http://www.trumptwitterarchive.com/ar
 <div style="text-align: center">
   <img src="trump_tweet.jpg" width="40%">
 </div>
+<p>Source: CNN</p>
 
 # Website Navigation
 Our project background and question, as well as a brief literature review, can be found on the [background](background.html) page. 
