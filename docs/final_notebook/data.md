@@ -162,13 +162,12 @@ The following features were recorded to help with visualization later, but not u
 
 We did an initial analysis of some keywords, as shown in our notebook. The list is `['trade', 'Trade', 'deal', 'products', 'manufacturing', 'China', 'Xi', 'Xi Jinping', 'CCP', 'Communist Party', 'Beijing']`. Approximately 1/10 of Trump’s tweets that we cleaned (of ~14,000 total) contain some combination of these keywords. As we see above, the majority of the 'keywords' (based on our initial keyword list) appearing in our data are trade, Trade, deal, China, and Xi (products and manufacturing not far behind). CCP, Communist Party, and Beijing do not show up that frequently. In the future, we will probably employ functionality to search for the most frequently appearing useful words (excludes articles, punctuation, etc.). The histogram is reproduced below:
 
-![png](output_13_0.png)
-
 <div class="output_png output_subarea ">
 <img src="output_13_0.png">
 </div>	
 
-Below are summary statistics for all the features we plan to analyze:
+Next, we examine the VIX data. Below are summary statistics for the data we were able to pull and consolidate from 
+	Bloomberg.
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
@@ -348,6 +347,28 @@ Below are summary statistics for all the features we plan to analyze:
 </div>
 </div>
 
+<p>Just based on the above, we can see a pretty large range in the values of the VIX, 
+	suggesting that the pricing jumps around a lot. At the same time, though, we see that on a minute by minute basis,
+	the price change is very small. We keep this in mind when developing our models because even though are outcome is price
+	delta, we experiment with different time intervals over which that delta is calculated to see which model will be most 
+	useful. </p>
+	  
+<p>Additionally, in our EDA, we looked at a snippet of the VIX pricing data. Our thought process was before diving into 
+	any analysis, we should first determine when the VIX rose or fell significantly and see if those changes appear 
+	to be related to any significant news events around those times. Our initial graph of the VIX data looks at EOD VIX 
+	pricing over a set period of time (December 1, 2015 - December 1, 2016). (Our analysis will hone in on minute by 
+	minute, but for us, it is important to be aware of the major surges). This graph is not reproduced below because of 
+	its size, but it can be seen in the notebook (title: “VIX Pricing over time”). The following were the main surges 
+	during this time period:
+<li>
+	<ul>12/11/15</ul>
+	<ul>1/19/16</ul>
+	<ul>2/11/16</ul>
+	<ul>6/14/16</ul> 
+	<ul>6/27/16</ul>
+	<ul>9/12/16</ul>
+	<ul>Two weeks before 2016 Presidential elections and a week afterwards</ul>
+</li>
 
 ![png](output_25_0.png)
 
