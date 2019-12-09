@@ -21,7 +21,11 @@ nav_order: 4
 <p>Based on these predictors, we initially considered two types of models. First, we considered one that predicts absolute price changes in VIX pricing (continuous outcome). Second, we considered one that predicts the sign of VIX pricing changes (positive, negative, or no change - a categorical outcome). We also wanted to create interval versions of each of these types of models that looks at the VIX price change over 1 minute, 5, 10, 20 , 30, and 60 minutes. We wanted to consider all these options to determine the most accurate and most useful model.</p>  
 
 <p>We first split our data into a train and test set, so that we are later able to assess how well our model performs in both a train set and a not-seen test set. Realistically, training accuracy reflects how well a given model 'understands' the data it is presented with, and testing accuracy reflects how well that model can be generalized to accurately form predictions about data it has not yet seen. </p>
-          
+     
+# Baseline Model
+
+<p>To start, we created a baseline linear model using all our predictors with a continuos outcome variable, <code class="highlighter-rouge">price_delta_i</code> where i indicates the time interval we are looking at. Unfortunately, the accuracy scores for train and test are extremely low for these models, as shown below (only up through 30 shown for concision).</p>
+
 ```python
 # split continuous outcome
 X_train0, X_test0, y_train0, y_test0 = train_test_split(model_data_0.loc[:, model_data_0.columns != 'price_delta'], 
@@ -51,8 +55,6 @@ X_train30, X_test30, y_train30, y_test30 = train_test_split(model_data_30.loc[:,
     Testing Accuracy 20 min: -0.005352697343854018
     Training Accuracy 30 min: 0.007959329834883788
     Testing Accuracy 30 min: -0.012027684215839551
-
-# Baseline Model
 
 We began our project by first constructing a baseline model - one where we simply predict that all songs should be included in our existing playlist. 
 This serves as a good source of comparison for our future models, which should at least do better than this trivial one.
