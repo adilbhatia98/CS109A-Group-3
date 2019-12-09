@@ -139,7 +139,6 @@
 
 <p>We first split our data into a train and test set, so that we are later able to assess how well our model performs in both a train set and a not-seen test set. Realistically, training accuracy reflects how well a given model 'understands' the data it is presented with, and testing accuracy reflects how well that model can be generalized to accurately form predictions about data it has not yet seen. </p>
           
-          
 <h1 id="baseline-model">Baseline Model</h1>
 
 <p>To start, we created a baseline linear model using all our predictors with a continuos outcome variable, <code class="highlighter-rouge">price_delta_i</code> where i indicates the time interval we are looking at. Unfortunately, the accuracy scores for train and test are extremely low for these models, as shown below (only up through 30 shown for concision).</p>
@@ -172,7 +171,33 @@
 
 </div>
           
-          
+The accuracy scores for the various time intervals are below:
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Training Accuracy 1 min: 0.44976265236774127
+Testing Accuracy 1 min: 0.5888792939459038
+Training Accuracy 5 min: 0.0201870869906412
+Testing Accuracy 5 min: -0.030266895778277236
+Training Accuracy 10 min: 0.004539964443405431
+Testing Accuracy 10 min: -0.00020103491148715236
+Training Accuracy 20 min: 0.013453791918044187
+Testing Accuracy 20 min: -0.005352697343854018
+Training Accuracy 30 min: 0.007959329834883788
+Testing Accuracy 30 min: -0.012027684215839551
+</pre>
+</div>
+</div>
+
+</div>
+</div>
 
 <p>We began our project by first constructing a baseline model - one where we simply predict that all songs should be included in our existing playlist. 
 This serves as a good source of comparison for our future models, which should at least do better than this trivial one.</p>
