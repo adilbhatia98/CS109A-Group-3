@@ -360,7 +360,6 @@ Next, we examine the VIX data. Below are summary statistics for the data we were
 	minute, but for us, it is important to be aware of the major surges). This graph is not reproduced below because of 
 	its size, but it can be seen in the notebook (title: “VIX Pricing over time”). The following were the main surges 
 	during this time period:</p>
-<li>
 	<ul>12/11/15</ul>
 	<ul>1/19/16</ul>
 	<ul>2/11/16</ul>
@@ -368,7 +367,6 @@ Next, we examine the VIX data. Below are summary statistics for the data we were
 	<ul>6/27/16</ul>
 	<ul>9/12/16</ul>
 	<ul>Two weeks before 2016 Presidential elections and a week afterwards</ul>
-</li>
 
 ![png](output_25_0.png)
 
