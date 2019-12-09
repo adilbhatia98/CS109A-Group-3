@@ -4,7 +4,7 @@ layout: default
 nav_order: 1
 ---
 
-# Spotify You (Group 49)
+# Trump Tweet VIX (Group 3)
 {: .no_toc }
 
 ## Table of contents
@@ -20,13 +20,11 @@ nav_order: 1
 For our final project, we wanted to build a model that uses President Trump's tweets to predict changes in the VIX Index. Theoretically, a model performing accurately 51 (or higher) percent of the time provides a way to intelligently bet on market volatility and generate a positive return on average. 
 
 We utilized Trump's Twitter archive [here](http://www.trumptwitterarchive.com/archive) to build our database of tweets, and we pulled minute-by-minute VIX data from an HBS Baker Library Bloomberg Terminal. Our analysis begins in May 2016 when Trump emerged as a solid, leading candidate for the GOP in the 2016 Presidential election. 
+
 *insert info about models*
 
-
-*insert photo*
-
 <div style="text-align: center">
-  <img src="sy.png" width="40%">
+  <img src="trump_tweet.jpg" width="40%">
 </div>
 
 # Website Navigation
