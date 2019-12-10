@@ -137,43 +137,19 @@
           
 <h1 id="baseline-model">Baseline Model - Logistic</h1>
 
+<p>Our baseline model represents a simple logistic regression with a multiclass outcome variable. Using the predictors in our data, the model predicts the 'change in VIX price' classification as positive, negative, or 0 (no change) using a simple logistic regression.</p>          
+         
 <h1 id="l1-and-l2-regularization">L1 and L2 Regularization</h1>
 
+<p>We then decided to incorporate regularization in an attempt to improve our logistic model's predictive ability. Lasso regularization (l1) sets the effects/coefficients of unimportant predictors to 0, whereas ridge (l2) simply minimizes/lowers those effects.</p>               
+          
 <h1 id="random-forest">Random Forest</h1>
 
-<p>Our first ensemble method is random forest, which randomly subsets predictors upon which to generate decision trees.</p>
+<p>Our first ensemble method is random forest, which randomly subsets predictors upon which to generate decision trees. We tested out a few different tree depth and number parameters ourselves and determined that a depth of 5 and number of trees of 100 was ideal for our analysis.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># config parameters</span>
-<span class="n">num_trees</span> <span class="o">=</span> <span class="mi">45</span>
-<span class="n">new_depth</span> <span class="o">=</span> <span class="mi">6</span>
-
-<span class="c"># model random forest</span>
-<span class="n">model_rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="n">num_trees</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">new_depth</span><span class="p">)</span>
-
-<span class="c"># fit model on X_train data</span>
-<span class="n">model_rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-
-<span class="c"># predict using model</span>
-<span class="n">y_pred_train_rf</span> <span class="o">=</span> <span class="n">model_rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>
-<span class="n">y_pred_test_rf</span> <span class="o">=</span> <span class="n">model_rf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_test</span><span class="p">)</span>
-
-<span class="c"># accuracy from train and test</span>
-<span class="n">train_score_rf</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_pred_train_rf</span><span class="p">)</span>
-<span class="n">test_score_rf</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_test_rf</span><span class="p">)</span>
-
-<span class="c"># print accuracy scores</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"[Random Forest] Classification accuracy for train set: "</span><span class="p">,</span> <span class="n">train_score_rf</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"[Random Forest] Classification accuracy for test set:"</span><span class="p">,</span> <span class="n">test_score_rf</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Random Forest] Classification accuracy for train set:  0.9300889328063241
-[Random Forest] Classification accuracy for test set: 0.9229249011857708
-</code></pre></div></div>
-
-<p>A random forest, at the same depth as the decision tree (namely a depth of 6) performs even better. The test data reaches an accuracy of about 92.6% in the training at 91.5% in the test.</p>
 
 <h1 id="boosting">Boosting</h1>
-<p>Next, we will consider boosting, an iterative approach that might eliminate some more of the error in our trees.</p>
+<p>Next, we considered boosting, an iterative approach that might eliminate some more of the error from above. Note that the RF model is based on fully grown trees, meaning it is susceptible to low bias and high variance in its results. Boosting, however is based on 'weaker' learners meaning high bias and low variance.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># define classifier function</span>
 <span class="k">def</span> <span class="nf">boostingClassifier</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">depth</span><span class="p">):</span>
@@ -225,7 +201,7 @@
 
 <h1 id="neural-networks">Neural Networks</h1>
 
-<p>Finally, we created an artificial neural network to classify our playlist songs.</p>
+<p>Finally, we created an artificial neural network to classify our outcomes.</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># check input and output dimensions</span>
 <span class="n">input_dim_2</span> <span class="o">=</span> <span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
