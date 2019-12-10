@@ -96,84 +96,14 @@ print("Training Accuracy 60 min: ", train_scores_logreg60)
 print("Testing Accuracy 60 min: ", train_scores_logreg60)
 ```
 ```
-Interval	training accuracy	test accuracy
-4	30 minute	0.523760	0.503306
-3	20 minute	0.515702	0.500826
-5	60 minute	0.534946	0.499586
-2	10 minute	0.491529	0.476033
-1	5 minute	0.476033	0.452893
-0	1 minute	0.468182	0.451240
+Interval  training accuracy   test accuracy
+30 minute	0.523760	          0.503306
+20 minute	0.515702	          0.500826
+60 minute	0.534946	          0.499586
+10 minute	0.491529	          0.476033
+5 minute	0.476033	          0.452893
+1 minute	0.468182	          0.451240
 ```
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-    <div class="prompt"></div>
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Interval</th>
-      <th>training accuracy</th>
-      <th>test accuracy</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>4</th>
-      <td>30 minute</td>
-      <td>0.523760</td>
-      <td>0.503306</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>20 minute</td>
-      <td>0.515702</td>
-      <td>0.500826</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>60 minute</td>
-      <td>0.534946</td>
-      <td>0.499586</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>10 minute</td>
-      <td>0.491529</td>
-      <td>0.476033</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>5 minute</td>
-      <td>0.476033</td>
-      <td>0.452893</td>
-    </tr>
-    <tr>
-      <th>0</th>
-      <td>1 minute</td>
-      <td>0.468182</td>
-      <td>0.451240</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
 
 # L1 and L2 Regularization
 
