@@ -171,7 +171,17 @@ We did an initial analysis of some keywords, as shown in our notebook. The list 
 
 <p>The goal of looking at this list of keywords is to hone in on the content of Trump's tweets, specifically words and tweets in which we utilizes a negative tone toward China, and use tweet characteristics related to these keywords as relevant predictors in our model (such as how many of these keywords appear in a given tweet).</p>
 
-<p>INSERT EDA FOR TWITTER DATA USING TEXTBLOB ANALYSIS - SEE TRENDS IN SENTIMENT SCORES</p>
+<p>Now, we look at the distribution of sentiment and subjectivity scores for our Twitter data.</p>	
+
+<div class="output_png output_subarea ">
+<img src="output_sentiment.png">
+</div>
+
+<div class="output_png output_subarea ">
+<img src="output_subjectivity.png">
+</div>
+
+<p>We see that most of the tweets, as classified by textblob, are mainly neutral and leaning positive if anything. Then, in terms of subjectivity, we see that the distribution is almost normal with a great chunk of tweets being objectively classified based on sentiment score. Below, we will create a sentiment score variable that is weighted by (1-subjectivity) to capture 'objective' sentiment score.</p>
 
 Next, we examine the VIX data. Below are summary statistics for the data we were able to pull and consolidate from 
 	Bloomberg.
