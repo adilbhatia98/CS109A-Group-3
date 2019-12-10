@@ -26,11 +26,17 @@ For each model trial, we first split our data into a train and test set, so that
      
 # Baseline Model - Logistic
 
+<p>Our baseline model represents a simple logistic regression with a multiclass outcome variable. Using the predictors in our data, the model predicts the 'change in VIX price' classification as positive, negative, or 0 (no change) using a simple logistic regression.</p>          
+
+
 # L1 and L2 Regularization
+
+<p>We then decided to incorporate regularization in an attempt to improve our logistic model's predictive ability. Lasso regularization (l1) sets the effects/coefficients of unimportant predictors to 0, whereas ridge (l2) simply minimizes/lowers those effects.</p>               
+
 
 # Random Forest
 
-Our first ensemble method is random forest, which randomly subsets predictors upon which to generate decision trees.
+<p>Our first ensemble method is random forest, which randomly subsets predictors upon which to generate decision trees. We tested out a few different tree depth and number parameters ourselves and determined that a depth of 5 and number of trees of 100 was ideal for our analysis.</p>
 
 ```python
 # config parameters
