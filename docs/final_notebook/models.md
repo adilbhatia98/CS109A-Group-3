@@ -28,78 +28,82 @@ For each model trial, we first split our data into a train and test set, so that
 
 <p>Our baseline model represents a simple logistic regression with a multiclass outcome variable. Using the predictors in our data, the model predicts the 'change in VIX price' classification as positive, negative, or 0 (no change) using a simple logistic regression.</p>          
 
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 1 min</span>
-<span class="n">logreg0</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train0</span><span class="p">,</span> <span class="n">y_train0</span><span class="p">)</span>
-<span class="n">logreg_fit_train0</span> <span class="o">=</span> <span class="n">logreg0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train0</span><span class="p">)</span>
-<span class="n">logreg_fit_test0</span> <span class="o">=</span> <span class="n">logreg0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test0</span><span class="p">)</span>
+```
+# 1 min
+logreg0 = LogisticRegression(C=10000).fit(X_train0, y_train0)
+logreg_fit_train0 = logreg0.predict(X_train0)
+logreg_fit_test0 = logreg0.predict(X_test0)
 
-<span class="n">train_scores_logreg0</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train0</span><span class="p">,</span> <span class="n">logreg_fit_train0</span><span class="p">)</span>
-<span class="n">test_scores_logreg0</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test0</span><span class="p">,</span> <span class="n">logreg_fit_test0</span><span class="p">)</span>
+train_scores_logreg0 = accuracy_score(y_train0, logreg_fit_train0)
+test_scores_logreg0 = accuracy_score(y_test0, logreg_fit_test0)
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training Accuracy 1 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg0</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing Accuracy 1 min: &quot;</span><span class="p">,</span> <span class="n">test_scores_logreg0</span><span class="p">)</span>
+print("Training Accuracy 1 min: ", train_scores_logreg0)
+print("Testing Accuracy 1 min: ", test_scores_logreg0)
 
-<span class="c1"># 5 min</span>
-<span class="n">logreg5</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train5</span><span class="p">,</span> <span class="n">y_train5</span><span class="p">)</span>
-<span class="n">logreg_fit_train5</span> <span class="o">=</span> <span class="n">logreg5</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train5</span><span class="p">)</span>
-<span class="n">logreg_fit_test5</span> <span class="o">=</span> <span class="n">logreg5</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test5</span><span class="p">)</span>
+# 5 min
+logreg5 = LogisticRegression(C=10000).fit(X_train5, y_train5)
+logreg_fit_train5 = logreg5.predict(X_train5)
+logreg_fit_test5 = logreg5.predict(X_test5)
 
-<span class="n">train_scores_logreg5</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train5</span><span class="p">,</span> <span class="n">logreg_fit_train5</span><span class="p">)</span>
-<span class="n">test_scores_logreg5</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test5</span><span class="p">,</span> <span class="n">logreg_fit_test5</span><span class="p">)</span>
+train_scores_logreg5 = accuracy_score(y_train5, logreg_fit_train5)
+test_scores_logreg5 = accuracy_score(y_test5, logreg_fit_test5)
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training Accuracy 5 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg5</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing Accuracy 5 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg5</span><span class="p">)</span>
+print("Training Accuracy 5 min: ", train_scores_logreg5)
+print("Testing Accuracy 5 min: ", train_scores_logreg5)
 
-<span class="c1"># 10 min</span>
-<span class="n">logreg10</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train10</span><span class="p">,</span> <span class="n">y_train10</span><span class="p">)</span>
-<span class="n">logreg_fit_train10</span> <span class="o">=</span> <span class="n">logreg10</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train10</span><span class="p">)</span>
-<span class="n">logreg_fit_test10</span> <span class="o">=</span> <span class="n">logreg10</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test10</span><span class="p">)</span>
+# 10 min
+logreg10 = LogisticRegression(C=10000).fit(X_train10, y_train10)
+logreg_fit_train10 = logreg10.predict(X_train10)
+logreg_fit_test10 = logreg10.predict(X_test10)
 
-<span class="n">train_scores_logreg10</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train10</span><span class="p">,</span> <span class="n">logreg_fit_train10</span><span class="p">)</span>
-<span class="n">test_scores_logreg10</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test10</span><span class="p">,</span> <span class="n">logreg_fit_test10</span><span class="p">)</span>
+train_scores_logreg10 = accuracy_score(y_train10, logreg_fit_train10)
+test_scores_logreg10 = accuracy_score(y_test10, logreg_fit_test10)
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training Accuracy 10 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg10</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing Accuracy 10 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg10</span><span class="p">)</span>
+print("Training Accuracy 10 min: ", train_scores_logreg10)
+print("Testing Accuracy 10 min: ", train_scores_logreg10)
 
-<span class="c1"># 20 min</span>
-<span class="n">logreg20</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train20</span><span class="p">,</span> <span class="n">y_train20</span><span class="p">)</span>
-<span class="n">logreg_fit_train20</span> <span class="o">=</span> <span class="n">logreg20</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train20</span><span class="p">)</span>
-<span class="n">logreg_fit_test20</span> <span class="o">=</span> <span class="n">logreg20</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test20</span><span class="p">)</span>
+# 20 min
+logreg20 = LogisticRegression(C=10000).fit(X_train20, y_train20)
+logreg_fit_train20 = logreg20.predict(X_train20)
+logreg_fit_test20 = logreg20.predict(X_test20)
 
-<span class="n">train_scores_logreg20</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train20</span><span class="p">,</span> <span class="n">logreg_fit_train20</span><span class="p">)</span>
-<span class="n">test_scores_logreg20</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test20</span><span class="p">,</span> <span class="n">logreg_fit_test20</span><span class="p">)</span>
+train_scores_logreg20 = accuracy_score(y_train20, logreg_fit_train20)
+test_scores_logreg20 = accuracy_score(y_test20, logreg_fit_test20)
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training Accuracy 20 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg20</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing Accuracy 20 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg20</span><span class="p">)</span>
+print("Training Accuracy 20 min: ", train_scores_logreg20)
+print("Testing Accuracy 20 min: ", train_scores_logreg20)
 
-<span class="c1"># 30 min</span>
-<span class="n">logreg30</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train30</span><span class="p">,</span> <span class="n">y_train30</span><span class="p">)</span>
-<span class="n">logreg_fit_train30</span> <span class="o">=</span> <span class="n">logreg30</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train30</span><span class="p">)</span>
-<span class="n">logreg_fit_test30</span> <span class="o">=</span> <span class="n">logreg30</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test30</span><span class="p">)</span>
+# 30 min
+logreg30 = LogisticRegression(C=10000).fit(X_train30, y_train30)
+logreg_fit_train30 = logreg30.predict(X_train30)
+logreg_fit_test30 = logreg30.predict(X_test30)
 
-<span class="n">train_scores_logreg30</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train30</span><span class="p">,</span> <span class="n">logreg_fit_train30</span><span class="p">)</span>
-<span class="n">test_scores_logreg30</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test30</span><span class="p">,</span> <span class="n">logreg_fit_test30</span><span class="p">)</span>
+train_scores_logreg30 = accuracy_score(y_train30, logreg_fit_train30)
+test_scores_logreg30 = accuracy_score(y_test30, logreg_fit_test30)
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training Accuracy 30 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg30</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing Accuracy 30 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg30</span><span class="p">)</span>
+print("Training Accuracy 30 min: ", train_scores_logreg30)
+print("Testing Accuracy 30 min: ", train_scores_logreg30)
 
-<span class="c1"># 60 min</span>
-<span class="n">logreg60</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train60</span><span class="p">,</span> <span class="n">y_train60</span><span class="p">)</span>
-<span class="n">logreg_fit_train60</span> <span class="o">=</span> <span class="n">logreg60</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train60</span><span class="p">)</span>
-<span class="n">logreg_fit_test60</span> <span class="o">=</span> <span class="n">logreg60</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test60</span><span class="p">)</span>
+# 60 min
+logreg60 = LogisticRegression(C=10000).fit(X_train60, y_train60)
+logreg_fit_train60 = logreg60.predict(X_train60)
+logreg_fit_test60 = logreg60.predict(X_test60)
 
-<span class="n">train_scores_logreg60</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train60</span><span class="p">,</span> <span class="n">logreg_fit_train60</span><span class="p">)</span>
-<span class="n">test_scores_logreg60</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test60</span><span class="p">,</span> <span class="n">logreg_fit_test60</span><span class="p">)</span>
+train_scores_logreg60 = accuracy_score(y_train60, logreg_fit_train60)
+test_scores_logreg60 = accuracy_score(y_test60, logreg_fit_test60)
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training Accuracy 60 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg60</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing Accuracy 60 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg60</span><span class="p">)</span>
-</pre>
-</div>
-    </div>
-</div>
- 
+print("Training Accuracy 60 min: ", train_scores_logreg60)
+print("Testing Accuracy 60 min: ", train_scores_logreg60)
+```
+```
+Interval	training accuracy	test accuracy
+4	30 minute	0.523760	0.503306
+3	20 minute	0.515702	0.500826
+5	60 minute	0.534946	0.499586
+2	10 minute	0.491529	0.476033
+1	5 minute	0.476033	0.452893
+0	1 minute	0.468182	0.451240
+```
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
