@@ -28,9 +28,6 @@ For each model trial, we first split our data into a train and test set, so that
 
 <p>Our baseline model represents a simple logistic regression with a multiclass outcome variable. Using the predictors in our data, the model predicts the 'change in VIX price' classification as positive, negative, or 0 (no change) using a simple logistic regression.</p>          
 
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 1 min</span>
@@ -98,10 +95,9 @@ For each model trial, we first split our data into a train and test set, so that
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training Accuracy 60 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg60</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing Accuracy 60 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg60</span><span class="p">)</span>
-</pre></div>
-
-    </div>
+</pre>
 </div>
+    </div>
 </div>
   
 <div class="output_wrapper">
@@ -109,22 +105,16 @@ For each model trial, we first split our data into a train and test set, so that
 
 
 <div class="output_area">
-
     <div class="prompt"></div>
-
-
-
 <div class="output_html rendered_html output_subarea ">
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
         vertical-align: middle;
     }
-
     .dataframe tbody tr th {
         vertical-align: top;
     }
-
     .dataframe thead th {
         text-align: right;
     }
