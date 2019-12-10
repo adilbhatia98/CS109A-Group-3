@@ -84,6 +84,10 @@ We pulled all of Trump's tweets in the last few years from his Twitter archive. 
 + Adjusting GMT to Eastern Time + accounting for daylight savings
 + Manually fixing errors in cells where the delimiting was incorrectly done in the database output and manually re-inserting the delimiting character
 	
+<p>First, we removed all Twitter data preceding June 1, 2016. Trump became the presumptive nominee of the Republican Party that summer, and we figured that this represented the beginning of Trump tweets’ meaningful market relevance. 
+	There remained numerous instances of tweet data from the database lumping together multiple tweets in a single entry. We noticed that when this occurred, the components of these tweets were delimited by the character “{“. We used Excel’s “find” function to filter for all such cases. We then transferred all these “mega-cells” into a separate Excel sheet, which automatically separated the subcomponents of the tweet data: each row represented the data, including the actual tweet string, for a given tweet. However, the various classes of data (e.g., text, id_str, date, etc.) were lumped together in one column. These were split  using the aforementioned delimiter. We appended these cleaned data into the original Excel sheet, and then sorted the entire sheet by date to complete the process.
+	Additionally, tweets that were subject to the above issue—and many others, in general—also misclassified retweets as Trump’s original tweets. Retweets started with ‘@[handle] : ‘ so I wrote a function to filter through the data for entries starting with ‘@‘ that also included a ‘:’. Not all such instances were retweets—some were just tweets by Trump—and so this process had a manual component too.</p>
+	
 We utilized `ntlk`'s `textblob` function in order to analyze the sentiment of tweets in our data set. For each tweet, this function created a polarity score (the more positive a tweet is, the closer the score is to 1; the more negative, the closer it is to -1). The function also returns a subjectivity score. Lower subjectivity score means that the tweet's polarity score more objectively represents its sentiment.
 
 ## VIX
