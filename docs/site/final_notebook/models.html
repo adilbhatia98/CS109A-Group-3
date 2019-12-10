@@ -295,7 +295,8 @@
 <h1 id="l1-and-l2-regularization">L1 and L2 Regularization</h1>
 
 <p>We then decided to incorporate regularization in an attempt to improve our logistic model's predictive ability. Lasso regularization (l1) sets the effects/coefficients of unimportant predictors to 0, whereas ridge (l2) simply minimizes/lowers those effects.</p>               
-     
+<p>First, lasso regularization:</p>
+          
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">Lasso</span>
@@ -321,6 +322,126 @@
 
     </div>
 </div>
+          
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># output table</span>
+<span class="n">logreg_lasso_df_ouptut</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Interval&quot;</span><span class="p">,</span> <span class="s2">&quot;training accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;test accuracy&quot;</span><span class="p">])</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">intervals</span><span class="p">)):</span>
+    <span class="n">logreg_lasso_df_ouptut</span> <span class="o">=</span> <span class="n">logreg_lasso_df_ouptut</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s2">&quot;Interval&quot;</span><span class="p">:</span> <span class="n">intervals</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+        <span class="s2">&quot;training accuracy&quot;</span><span class="p">:</span>  <span class="n">train_scores_logreg_lasso</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+        <span class="s2">&quot;test accuracy&quot;</span> <span class="p">:</span> <span class="n">test_scores_logreg_lasso</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+          <span class="p">},</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">logreg_lasso_df_ouptut</span> <span class="o">=</span> <span class="n">logreg_lasso_df_ouptut</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;test accuracy&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">logreg_lasso_df_ouptut</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+          
+<p>Now, ridge regularization:</p>
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># ridge</span>
+<span class="n">ridge</span> <span class="o">=</span> <span class="n">LogisticRegressionCV</span><span class="p">(</span><span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;l2&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;liblinear&#39;</span><span class="p">)</span>
+
+<span class="n">train_scores_logreg_ridge</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">test_scores_logreg_ridge</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train_list</span><span class="p">)):</span>
+    <span class="n">ridgefit</span> <span class="o">=</span> <span class="n">ridge</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_train_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">y_pred_train_ridge</span> <span class="o">=</span> <span class="n">ridgefit</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">y_pred_test_ridge</span> <span class="o">=</span> <span class="n">ridgefit</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">train_score</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_pred_train_ridge</span><span class="p">)</span>
+    <span class="n">test_score</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_pred_test_ridge</span><span class="p">)</span>
+    <span class="n">train_scores_logreg_ridge</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_score</span><span class="p">)</span>
+    <span class="n">test_scores_logreg_ridge</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test_score</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Training set accuracy score for </span><span class="si">{intervals[i]}</span><span class="s1"> using CV &amp; Ridge penalty:: </span><span class="si">{train_score:.4f}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Test set accuracy score for </span><span class="si">{intervals[i]}</span><span class="s1"> using CV &amp; Ridge penalty:: </span><span class="si">{test_score:.4f}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+          
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># output table</span>
+<span class="n">logreg_ridge_df_ouptut</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Interval&quot;</span><span class="p">,</span> <span class="s2">&quot;training accuracy&quot;</span><span class="p">,</span> <span class="s2">&quot;test accuracy&quot;</span><span class="p">])</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">intervals</span><span class="p">)):</span>
+    <span class="n">logreg_ridge_df_ouptut</span> <span class="o">=</span> <span class="n">logreg_ridge_df_ouptut</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s2">&quot;Interval&quot;</span><span class="p">:</span> <span class="n">intervals</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+        <span class="s2">&quot;training accuracy&quot;</span><span class="p">:</span>  <span class="n">train_scores_logreg_ridge</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+        <span class="s2">&quot;test accuracy&quot;</span> <span class="p">:</span> <span class="n">test_scores_logreg_ridge</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+          <span class="p">},</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">logreg_ridge_df_ouptut</span> <span class="o">=</span> <span class="n">logreg_ridge_df_ouptut</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;test accuracy&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">logreg_ridge_df_ouptut</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+          
+<h1 id="random-forest">Random Forest</h1>
+
+<p>Our first ensemble method is random forest, which randomly subsets predictors upon which to generate decision trees. We tested out a few different tree depth and number parameters ourselves and determined that a depth of 5 and number of trees of 100 was ideal for our analysis.</p>
+
+<p>Below is sample code for one of the time interval models. We perform this for each of the models, and the results can bee seen below this code.</p>
+          
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Calibrate num trees and tree depth (after having tried different parameters, saw comparable results)</span>
+<span class="n">n_trees</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">tree_depth</span> <span class="o">=</span> <span class="mi">5</span>
+</pre></div>
+
+    </div>
+</div>
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># create RF models</span>
+<span class="n">forest_model0</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="n">n_trees</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">tree_depth</span><span class="p">,</span> 
+                                      <span class="n">max_features</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">np_X_train0</span><span class="p">[</span><span class="mi">0</span><span class="p">]))))</span>
+
+<span class="n">forest_model5</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="n">n_trees</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">tree_depth</span><span class="p">,</span> 
+                                      <span class="n">max_features</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">np_X_train5</span><span class="p">[</span><span class="mi">0</span><span class="p">]))))</span>
+
+<span class="n">forest_model10</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="n">n_trees</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">tree_depth</span><span class="p">,</span> 
+                                      <span class="n">max_features</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">np_X_train10</span><span class="p">[</span><span class="mi">0</span><span class="p">]))))</span>
+
+<span class="n">forest_model20</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="n">n_trees</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">tree_depth</span><span class="p">,</span> 
+                                      <span class="n">max_features</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">np_X_train20</span><span class="p">[</span><span class="mi">0</span><span class="p">]))))</span>
+
+<span class="n">forest_model30</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="n">n_trees</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">tree_depth</span><span class="p">,</span> 
+                                      <span class="n">max_features</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">np_X_train30</span><span class="p">[</span><span class="mi">0</span><span class="p">]))))</span>
+
+<span class="n">forest_model60</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="n">n_trees</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="n">tree_depth</span><span class="p">,</span> 
+                                      <span class="n">max_features</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">np_X_train60</span><span class="p">[</span><span class="mi">0</span><span class="p">]))))</span>
+</pre></div>
+
+    </div>
+</div>
+          
+div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># fit and calculate accuracy</span>
+<span class="n">forest_model0</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">np_X_train0</span><span class="p">,</span> <span class="n">np_y_train0</span><span class="p">)</span>
+<span class="n">y_pred0_forest_train</span> <span class="o">=</span> <span class="n">forest_model0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np_X_train0</span><span class="p">)</span>
+<span class="n">y_pred0_forest_test</span> <span class="o">=</span> <span class="n">forest_model0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np_X_test0</span><span class="p">)</span>
+
+<span class="n">random_forest_train_score0</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">np_y_train0</span><span class="p">,</span> <span class="n">y_pred0_forest_train</span><span class="p">)</span>
+<span class="n">random_forest_test_score0</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">np_y_test0</span><span class="p">,</span> <span class="n">y_pred0_forest_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;The random forest accuracy on the training set: </span><span class="si">{random_forest_train_score0}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;The random forest accuracy on the test set: </span><span class="si">{random_forest_test_score0:.4f}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
 </div>
         
 <div class="output_wrapper">
@@ -359,40 +480,40 @@
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>1 minute</td>
-      <td>0.467769</td>
-      <td>0.457025</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>5 minute</td>
-      <td>0.457025</td>
-      <td>0.455372</td>
-    </tr>
-    <tr>
       <th>5</th>
       <td>60 minute</td>
-      <td>0.444582</td>
-      <td>0.419355</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>30 minute</td>
-      <td>0.439669</td>
-      <td>0.416529</td>
+      <td>0.620968</td>
+      <td>0.545906</td>
     </tr>
     <tr>
       <th>3</th>
       <td>20 minute</td>
-      <td>0.373140</td>
-      <td>0.348760</td>
+      <td>0.623347</td>
+      <td>0.532231</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>30 minute</td>
+      <td>0.611777</td>
+      <td>0.514050</td>
     </tr>
     <tr>
       <th>2</th>
       <td>10 minute</td>
-      <td>0.217149</td>
-      <td>0.200826</td>
+      <td>0.635331</td>
+      <td>0.508264</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>1 minute</td>
+      <td>0.547934</td>
+      <td>0.455372</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5 minute</td>
+      <td>0.591116</td>
+      <td>0.446281</td>
     </tr>
   </tbody>
 </table>
@@ -403,63 +524,236 @@
 
 </div>
 </div>
-          
-<h1 id="random-forest">Random Forest</h1>
-
-<p>Our first ensemble method is random forest, which randomly subsets predictors upon which to generate decision trees. We tested out a few different tree depth and number parameters ourselves and determined that a depth of 5 and number of trees of 100 was ideal for our analysis.</p>
-
-
+        
+      
 <h1 id="boosting">Boosting</h1>
 <p>Next, we considered boosting, an iterative approach that might eliminate some more of the error from above. Note that the RF model is based on fully grown trees, meaning it is susceptible to low bias and high variance in its results. Boosting, however is based on 'weaker' learners meaning high bias and low variance.</p>
+<p>Below is sample code for one of the time interval models. We perform this for each of the models, and the results can bee seen below this code.</p>
+        
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># initialize parameters like for RF, much the same process - tested different ones and saw best/most consistent results with the following</span>
+<span class="n">estimators_ADA</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="n">learning_ADA</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">tree_depth</span> <span class="o">=</span> <span class="mi">10</span>
+</pre></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># define classifier function</span>
-<span class="k">def</span> <span class="nf">boostingClassifier</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">depth</span><span class="p">):</span>
-    <span class="c"># AdaBoostClassifier</span>
-    <span class="n">abc</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span><span class="p">(</span><span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">depth</span><span class="p">),</span>
-                         <span class="n">n_estimators</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span>
-    <span class="n">abc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-    <span class="c"># staged_score train to plot</span>
-    <span class="n">abc_predicts_train</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">staged_score</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">abc_predicts_train</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">"train"</span><span class="p">);</span>
+    </div>
+</div>
+        
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model_ADA0</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span><span class="p">(</span><span class="n">base_estimator</span><span class="o">=</span><span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">tree_depth</span><span class="p">),</span> 
+                               <span class="n">learning_rate</span><span class="o">=</span><span class="n">learning_ADA</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="n">estimators_ADA</span><span class="p">)</span>
+<span class="n">model_ADA0</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">np_X_train0</span><span class="p">,</span> <span class="n">np_y_train0</span><span class="p">)</span>
 
-    <span class="c"># staged_score test to plot</span>
-    <span class="n">abc_predicts_test</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">staged_score</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">abc_predicts_test</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s">"test"</span><span class="p">);</span>
+<span class="n">y_train_pred_ADA0</span> <span class="o">=</span> <span class="n">model_ADA0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np_X_train0</span><span class="p">)</span>
+<span class="n">y_test_pred_ADA0</span> <span class="o">=</span> <span class="n">model_ADA0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np_X_test0</span><span class="p">)</span>
+<span class="n">ADA_train0</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">np_y_train0</span><span class="p">,</span> <span class="n">y_train_pred_ADA0</span><span class="p">)</span>
+<span class="n">ADA_test0</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">np_y_test0</span><span class="p">,</span> <span class="n">y_test_pred_ADA0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;The ADABoost accuracy on the training set: </span><span class="si">{ADA_train0}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;The ADABoost accuracy on the test set: </span><span class="si">{ADA_test0:.4f}</span><span class="s1">&#39;</span><span class="p">)</span>
 
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">"AdaBoost Classifier Accuracy, n = "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">depth</span><span class="p">))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"Iterations"</span><span class="p">)</span>
+<span class="n">ADA_train0_staged</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model_ADA0</span><span class="o">.</span><span class="n">staged_score</span><span class="p">(</span><span class="n">np_X_train0</span><span class="p">,</span> <span class="n">np_y_train0</span><span class="p">))</span>
+<span class="n">ADA_test0_staged</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">model_ADA0</span><span class="o">.</span><span class="n">staged_score</span><span class="p">(</span><span class="n">np_X_test0</span><span class="p">,</span> <span class="n">np_y_test0</span><span class="p">))</span>
+
+</pre></div>
+
+    </div>
+</div>
+        
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># your code here</span>
+<span class="c1"># define function to abstract process of building plot</span>
+<span class="k">def</span> <span class="nf">baselearner_plt</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">):</span>
+    <span class="c1"># AdaBoostClassifier</span>
+    <span class="n">ada</span> <span class="o">=</span> <span class="n">AdaBoostClassifier</span><span class="p">(</span><span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">n</span><span class="p">),</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.05</span><span class="p">)</span>
+    <span class="n">ada</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    
+    <span class="c1"># staged_score train to plot</span>
+    <span class="n">ada_predicts_train</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ada</span><span class="o">.</span><span class="n">staged_score</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ada_predicts_train</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Train&quot;</span><span class="p">);</span>
+
+    <span class="c1"># staged_score test to plot</span>
+    <span class="n">ada_predicts_test</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">ada</span><span class="o">.</span><span class="n">staged_score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span><span class="n">y_test</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ada_predicts_test</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;Test&quot;</span><span class="p">);</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;AdaBoost Classifier Accuracy&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Accuracy&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Num Iterations&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     
-    <span class="k">return</span><span class="p">(</span><span class="s">"Maximum test accuracy for depth of "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">depth</span><span class="p">)</span><span class="o">+</span><span class="s">" is "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">abc_predicts_test</span><span class="p">))</span><span class="o">+</span><span class="s">" at "</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">abc_predicts_test</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">abc_predicts_test</span><span class="p">)))</span><span class="o">+</span><span class="s">" iterations"</span><span class="p">)</span>
-</code></pre></div></div>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maximum test accuracy for depth of &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot; is &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">ada_predicts_test</span><span class="p">))</span><span class="o">+</span><span class="s2">&quot; at &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">ada_predicts_test</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">ada_predicts_test</span><span class="p">)))</span><span class="o">+</span><span class="s2">&quot; iterations&quot;</span><span class="p">)</span>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">):</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">boostingClassifier</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">i</span><span class="p">))</span>
-</code></pre></div></div>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train_list</span><span class="p">)):</span>
+    <span class="n">baselearner_plt</span><span class="p">(</span><span class="n">tree_depth</span><span class="p">,</span> <span class="n">X_train_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_train_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">X_test_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_test_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Time Interval: &quot;</span><span class="p">,</span> <span class="n">intervals</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> 
+    
+</pre></div>
 
-<p><img src="/final_notebook/output_60_0.png" alt="png" /></p>
+    </div>
+</div>
+        
+<div class="output_wrapper">
+<div class="output">
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Maximum test accuracy for depth of 1 is 0.9150197628458498 at 773 iterations
-</code></pre></div></div>
 
-<p><img src="/final_notebook/output_60_2.png" alt="png" /></p>
+<div class="output_area">
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Maximum test accuracy for depth of 2 is 0.9298418972332015 at 751 iterations
-</code></pre></div></div>
+    <div class="prompt"></div>
 
-<p><img src="/final_notebook/output_60_4.png" alt="png" /></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Maximum test accuracy for depth of 3 is 0.9268774703557312 at 500 iterations
-</code></pre></div></div>
 
-<p><img src="/final_notebook/output_60_6.png" alt="png" /></p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Maximum test accuracy for depth of 4 is 0.9219367588932806 at 530 iterations
-</code></pre></div></div>
+<div class="output_png output_subarea ">
+<img src="output_boost5.png">
+</div>
 
-<p>We see based upon an AdaBoostClassifier the maximum test accuracy of 93.0% is attained at a depth of 2. This is attained after 751 iterations. The AdaBoostClassifier is our most accurate model so far.</p>
+</div>
 
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Maximum test accuracy for depth of 10 is 0.4818181818181818 at 2 iterations
+Time Interval:  1 minute
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="output_boost5.png">
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Maximum test accuracy for depth of 10 is 0.5107438016528926 at 8 iterations
+Time Interval:  5 minute
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="output_boost10.png">
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Maximum test accuracy for depth of 10 is 0.5958677685950413 at 9 iterations
+Time Interval:  10 minute
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="output_boost20.png">
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Maximum test accuracy for depth of 10 is 0.6090909090909091 at 21 iterations
+Time Interval:  20 minute
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="output_boost30.png">
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Maximum test accuracy for depth of 10 is 0.6347107438016529 at 29 iterations
+Time Interval:  30 minute
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="output_boost60.png">
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Maximum test accuracy for depth of 10 is 0.6683209263854425 at 5 iterations
+Time Interval:  60 minute
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+        
 <h1 id="neural-networks">Neural Networks</h1>
 
 <p>Finally, we created an artificial neural network to classify our outcomes.</p>
