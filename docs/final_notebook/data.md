@@ -170,6 +170,10 @@ We did an initial analysis of some keywords, as shown in our notebook. The list 
 <img src="output_13_0.png">
 </div>	
 
+<p>The goal of looking at this list of keywords is to hone in on the content of Trump's tweets, specifically words and tweets in which we utilizes a negative tone toward China, and use tweet characteristics related to these keywords as relevant predictors in our model (such as how many of these keywords appear in a given tweet).</p>
+
+<p>INSERT EDA FOR TWITTER DATA USING TEXTBLOB ANALYSIS - SEE TRENDS IN SENTIMENT SCORES</p>
+
 Next, we examine the VIX data. Below are summary statistics for the data we were able to pull and consolidate from 
 	Bloomberg.
 
