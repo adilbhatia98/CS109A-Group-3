@@ -175,6 +175,104 @@ For each model trial, we first split our data into a train and test set, so that
 
 <p>We then decided to incorporate regularization in an attempt to improve our logistic model's predictive ability. Lasso regularization (l1) sets the effects/coefficients of unimportant predictors to 0, whereas ridge (l2) simply minimizes/lowers those effects.</p>               
 
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">Lasso</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegressionCV</span>
+
+<span class="c1"># lasso</span>
+<span class="n">lasso</span> <span class="o">=</span> <span class="n">LogisticRegressionCV</span><span class="p">(</span><span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;liblinear&#39;</span><span class="p">)</span>
+
+<span class="n">train_scores_logreg_lasso</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">test_scores_logreg_lasso</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train_list</span><span class="p">)):</span>
+    <span class="n">lassofit</span> <span class="o">=</span> <span class="n">lasso</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_train_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">y_pred_train_lasso</span> <span class="o">=</span> <span class="n">lassofit</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">y_pred_test_lasso</span> <span class="o">=</span> <span class="n">lassofit</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">train_score</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_pred_train_lasso</span><span class="p">)</span>
+    <span class="n">test_score</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_pred_test_lasso</span><span class="p">)</span>
+    <span class="n">train_scores_logreg_lasso</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_score</span><span class="p">)</span>
+    <span class="n">test_scores_logreg_lasso</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test_score</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Training set accuracy score for </span><span class="si">{intervals[i]}</span><span class="s1"> using CV &amp; LASSO penalty: </span><span class="si">{train_score:.4f}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Test set accuracy score for </span><span class="si">{intervals[i]}</span><span class="s1"> using CV &amp; LASSO penalty: </span><span class="si">{test_score:.4f}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+    <div class="prompt"></div>
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Interval</th>
+      <th>training accuracy</th>
+      <th>test accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1 minute</td>
+      <td>0.467769</td>
+      <td>0.457025</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5 minute</td>
+      <td>0.457025</td>
+      <td>0.455372</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>60 minute</td>
+      <td>0.444582</td>
+      <td>0.419355</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>30 minute</td>
+      <td>0.439669</td>
+      <td>0.416529</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>20 minute</td>
+      <td>0.373140</td>
+      <td>0.348760</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>10 minute</td>
+      <td>0.217149</td>
+      <td>0.200826</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
 
 # Random Forest
 
