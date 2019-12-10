@@ -107,203 +107,218 @@ Interval  training accuracy   test accuracy
 
 # L1 and L2 Regularization
 
-<p>We then decided to incorporate regularization in an attempt to improve our logistic model's predictive ability. Lasso regularization (l1) sets the effects/coefficients of unimportant predictors to 0, whereas ridge (l2) simply minimizes/lowers those effects.</p>               
+<p>We then decided to incorporate regularization in an attempt to improve our logistic model's predictive ability. Lasso regularization (L1) sets the effects/coefficients of unimportant predictors to 0, whereas ridge (L2) simply minimizes/lowers those effects.</p>               
 
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">Lasso</span>
-<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegressionCV</span>
+<p>First, lasso regularization:</p>
 
-<span class="c1"># lasso</span>
-<span class="n">lasso</span> <span class="o">=</span> <span class="n">LogisticRegressionCV</span><span class="p">(</span><span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">penalty</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="s1">&#39;liblinear&#39;</span><span class="p">)</span>
+```
+from sklearn.linear_model import LogisticRegressionCV
 
-<span class="n">train_scores_logreg_lasso</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">test_scores_logreg_lasso</span> <span class="o">=</span> <span class="p">[]</span>
+# lasso
+lasso = LogisticRegressionCV(cv=5, penalty='l1', max_iter=1000, solver='liblinear')
 
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train_list</span><span class="p">)):</span>
-    <span class="n">lassofit</span> <span class="o">=</span> <span class="n">lasso</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_train_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-    <span class="n">y_pred_train_lasso</span> <span class="o">=</span> <span class="n">lassofit</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-    <span class="n">y_pred_test_lasso</span> <span class="o">=</span> <span class="n">lassofit</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_list</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-    <span class="n">train_score</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_pred_train_lasso</span><span class="p">)</span>
-    <span class="n">test_score</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y_pred_test_lasso</span><span class="p">)</span>
-    <span class="n">train_scores_logreg_lasso</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">train_score</span><span class="p">)</span>
-    <span class="n">test_scores_logreg_lasso</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test_score</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Training set accuracy score for </span><span class="si">{intervals[i]}</span><span class="s1"> using CV &amp; LASSO penalty: </span><span class="si">{train_score:.4f}</span><span class="s1">&#39;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Test set accuracy score for </span><span class="si">{intervals[i]}</span><span class="s1"> using CV &amp; LASSO penalty: </span><span class="si">{test_score:.4f}</span><span class="s1">&#39;</span><span class="p">)</span>
-</pre></div>
-    </div>
-</div>
-</div>
+train_scores_logreg_lasso = []
+test_scores_logreg_lasso = []
 
-<div class="output_wrapper">
-<div class="output">
+for i in range(len(X_train_list)):
+    lassofit = lasso.fit(X_train_list[i], y_train_list[i])
+    y_pred_train_lasso = lassofit.predict(X_train_list[i])
+    y_pred_test_lasso = lassofit.predict(X_test_list[i])
+    train_score = accuracy_score(y_train_list[i], y_pred_train_lasso)
+    test_score = accuracy_score(y_test_list[i], y_pred_test_lasso)
+    train_scores_logreg_lasso.append(train_score)
+    test_scores_logreg_lasso.append(test_score)
+    print(f'Training set accuracy score for {intervals[i]} using CV & LASSO penalty: {train_score:.4f}')
+    print(f'Test set accuracy score for {intervals[i]} using CV & LASSO penalty: {test_score:.4f}')
 
+```
+```
+Interval	training accuracy	test accuracy
+1 minute	0.467769	          0.457025
+5 minute	0.457025	          0.455372
+60 minute	0.444582	          0.419355
+30 minute	0.439669	          0.416529
+20 minute	0.373140	          0.348760
+10 minute	0.217149	          0.200826
+```
+<p>Now, ridge regularization:</p>
+```
+# ridge
+ridge = LogisticRegressionCV(cv=5, penalty='l2', max_iter=1000, solver='liblinear')
 
-<div class="output_area">
-    <div class="prompt"></div>
-<div class="output_html rendered_html output_subarea ">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Interval</th>
-      <th>training accuracy</th>
-      <th>test accuracy</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1 minute</td>
-      <td>0.467769</td>
-      <td>0.457025</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>5 minute</td>
-      <td>0.457025</td>
-      <td>0.455372</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>60 minute</td>
-      <td>0.444582</td>
-      <td>0.419355</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>30 minute</td>
-      <td>0.439669</td>
-      <td>0.416529</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>20 minute</td>
-      <td>0.373140</td>
-      <td>0.348760</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>10 minute</td>
-      <td>0.217149</td>
-      <td>0.200826</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
+train_scores_logreg_ridge = []
+test_scores_logreg_ridge = []
 
+for i in range(len(X_train_list)):
+    ridgefit = ridge.fit(X_train_list[i], y_train_list[i])
+    y_pred_train_ridge = ridgefit.predict(X_train_list[i])
+    y_pred_test_ridge = ridgefit.predict(X_test_list[i])
+    train_score = accuracy_score(y_train_list[i], y_pred_train_ridge)
+    test_score = accuracy_score(y_test_list[i], y_pred_test_ridge)
+    train_scores_logreg_ridge.append(train_score)
+    test_scores_logreg_ridge.append(test_score)
+    print(f'Training set accuracy score for {intervals[i]} using CV & Ridge penalty:: {train_score:.4f}')
+    print(f'Test set accuracy score for {intervals[i]} using CV & Ridge penalty:: {test_score:.4f}')
+
+```
+```
+Interval	training accuracy	test accuracy
+60 minute	0.544458	          0.516129
+20 minute	0.526033	          0.500826
+30 minute	0.531612	          0.495868
+10 minute	0.495455	          0.480165
+1 minute	0.469421	          0.451240
+5 minute	0.473140	          0.439669
+```
 # Random Forest
 
 <p>Our first ensemble method is random forest, which randomly subsets predictors upon which to generate decision trees. We tested out a few different tree depth and number parameters ourselves and determined that a depth of 5 and number of trees of 100 was ideal for our analysis.</p>
 
-```python
-# config parameters
-num_trees = 45
-new_depth = 6
-
-# model random forest
-model_rf = RandomForestClassifier(n_estimators=num_trees, max_depth=new_depth)
-
-# fit model on X_train data
-model_rf.fit(x_train, y_train)
-
-# predict using model
-y_pred_train_rf = model_rf.predict(x_train)
-y_pred_test_rf = model_rf.predict(x_test)
-
-# accuracy from train and test
-train_score_rf = accuracy_score(y_train, y_pred_train_rf)
-test_score_rf = accuracy_score(y_test, y_pred_test_rf)
-
-# print accuracy scores
-print("[Random Forest] Classification accuracy for train set: ", train_score_rf)
-print("[Random Forest] Classification accuracy for test set:", test_score_rf)
+<p>Below is sample code for one of the time interval models. We perform this for each of the models, and the results can bee seen below this code.</p>
+```
+# Calibrate num trees and tree depth (after having tried different parameters, saw comparable results)
+n_trees = 100
+tree_depth = 5
 ```
 
-    [Random Forest] Classification accuracy for train set:  0.9300889328063241
-    [Random Forest] Classification accuracy for test set: 0.9229249011857708
+```
+# create RF models
+forest_model0 = RandomForestClassifier(n_estimators=n_trees, max_depth=tree_depth, 
+                                      max_features=int(np.sqrt(len(np_X_train0[0]))))
 
+forest_model5 = RandomForestClassifier(n_estimators=n_trees, max_depth=tree_depth, 
+                                      max_features=int(np.sqrt(len(np_X_train5[0]))))
 
-A random forest, at the same depth as the decision tree (namely a depth of 6) performs even better. The test data reaches an accuracy of about 92.6% in the training at 91.5% in the test. 
+forest_model10 = RandomForestClassifier(n_estimators=n_trees, max_depth=tree_depth, 
+                                      max_features=int(np.sqrt(len(np_X_train10[0]))))
+
+forest_model20 = RandomForestClassifier(n_estimators=n_trees, max_depth=tree_depth, 
+                                      max_features=int(np.sqrt(len(np_X_train20[0]))))
+
+forest_model30 = RandomForestClassifier(n_estimators=n_trees, max_depth=tree_depth, 
+                                      max_features=int(np.sqrt(len(np_X_train30[0]))))
+
+forest_model60 = RandomForestClassifier(n_estimators=n_trees, max_depth=tree_depth, 
+                                      max_features=int(np.sqrt(len(np_X_train60[0]))))
+```
+
+```
+# fit and calculate accuracy
+forest_model0.fit(np_X_train0, np_y_train0)
+y_pred0_forest_train = forest_model0.predict(np_X_train0)
+y_pred0_forest_test = forest_model0.predict(np_X_test0)
+
+random_forest_train_score0 = accuracy_score(np_y_train0, y_pred0_forest_train)
+random_forest_test_score0 = accuracy_score(np_y_test0, y_pred0_forest_test)
+print(f'The random forest accuracy on the training set: {random_forest_train_score0}')
+print(f'The random forest accuracy on the test set: {random_forest_test_score0:.4f}')
+
+```
+
+```
+Interval	training accuracy	test accuracy
+60 minute	0.620968	          0.545906
+20 minute	0.623347	          0.532231
+30 minute	0.611777	          0.514050
+10 minute	0.635331	          0.508264
+1 minute	0.547934	          0.455372
+5 minute	0.591116	          0.446281
+```
 
 
 # Boosting
 Next, we will consider boosting, an iterative approach that might eliminate some more of the error in our trees.
 
+<p>Below is sample code for one of the time interval models. We perform this for each of the models, and the results can bee seen below this code.</p>
+
 ```python
-# define classifier function
-def boostingClassifier(x_train, y_train, depth):
+# initialize parameters like for RF, much the same process - tested different ones and saw best/most consistent results with the following
+estimators_ADA = 40
+learning_ADA = 0.01
+tree_depth = 10
+```
+
+```
+model_ADA0 = AdaBoostClassifier(base_estimator=DecisionTreeClassifier(max_depth=tree_depth), 
+                               learning_rate=learning_ADA, n_estimators=estimators_ADA)
+model_ADA0.fit(np_X_train0, np_y_train0)
+
+y_train_pred_ADA0 = model_ADA0.predict(np_X_train0)
+y_test_pred_ADA0 = model_ADA0.predict(np_X_test0)
+ADA_train0 = accuracy_score(np_y_train0, y_train_pred_ADA0)
+ADA_test0 = accuracy_score(np_y_test0, y_test_pred_ADA0)
+print(f'The ADABoost accuracy on the training set: {ADA_train0}')
+print(f'The ADABoost accuracy on the test set: {ADA_test0:.4f}')
+
+ADA_train0_staged = list(model_ADA0.staged_score(np_X_train0, np_y_train0))
+ADA_test0_staged = list(model_ADA0.staged_score(np_X_test0, np_y_test0))
+```
+
+```
+# define function to abstract process of building plot
+def baselearner_plt(n, X_train, y_train, X_test, y_test):
     # AdaBoostClassifier
-    abc = AdaBoostClassifier(DecisionTreeClassifier(max_depth=depth),
-                         n_estimators=800, learning_rate = 0.05)
-    abc.fit(x_train, y_train)
+    ada = AdaBoostClassifier(DecisionTreeClassifier(max_depth=n), n_estimators=30, learning_rate = 0.05)
+    ada.fit(X_train, y_train)
+    
     # staged_score train to plot
-    abc_predicts_train = list(abc.staged_score(x_train,y_train))
-    plt.plot(abc_predicts_train, label = "train");
+    ada_predicts_train = list(ada.staged_score(X_train,y_train))
+    plt.plot(ada_predicts_train, label = "Train");
 
     # staged_score test to plot
-    abc_predicts_test = list(abc.staged_score(x_test,y_test))
-    plt.plot(abc_predicts_test, label = "test");
+    ada_predicts_test = list(ada.staged_score(X_test,y_test))
+    plt.plot(ada_predicts_test, label = "Test");
 
-    plt.legend()
-    plt.title("AdaBoost Classifier Accuracy, n = "+str(depth))
-    plt.xlabel("Iterations")
+    plt.legend(fontsize=14)
+    plt.title("AdaBoost Classifier Accuracy", fontsize=18)
+    plt.ylabel("Accuracy", fontsize=16)
+    plt.xlabel("Num Iterations", fontsize=16)
     plt.show()
     
-    return("Maximum test accuracy for depth of "+str(depth)+" is "+str(max(abc_predicts_test))+" at "+str(abc_predicts_test.index(max(abc_predicts_test)))+" iterations")
+    print("Maximum test accuracy for depth of "+str(n)+" is "+str(max(ada_predicts_test))+" at "+str(ada_predicts_test.index(max(ada_predicts_test)))+" iterations")
+
+for i in range(len(X_train_list)):
+    baselearner_plt(tree_depth, X_train_list[i], y_train_list[i], X_test_list[i], y_test_list[i])
+    print("Time Interval: ", intervals[i]) 
+    
 ```
 
+![png](output_boost0.png)
 
-```python
-for i in range(1,5):
-    print(boostingClassifier(x_train, y_train, i))
-```
-
-
-![png](output_60_0.png)
+    Maximum test accuracy for depth of 10 is 0.4818181818181818 at 2 iterations
+    Time Interval:  1 minute
 
 
-    Maximum test accuracy for depth of 1 is 0.9150197628458498 at 773 iterations
+![png](output_boost5.png)
 
 
+    Maximum test accuracy for depth of 10 is 0.5107438016528926 at 8 iterations
+    Time Interval:  5 minute
 
-![png](output_60_2.png)
-
-
-    Maximum test accuracy for depth of 2 is 0.9298418972332015 at 751 iterations
-
+![png](output_boost10.png)
 
 
-![png](output_60_4.png)
+    Maximum test accuracy for depth of 10 is 0.5958677685950413 at 9 iterations
+    Time Interval:  10 minute
+
+![png](output_boost20.png)
 
 
-    Maximum test accuracy for depth of 3 is 0.9268774703557312 at 500 iterations
+    Maximum test accuracy for depth of 10 is 0.6090909090909091 at 21 iterations
+    Time Interval:  20 minute
+
+![png](output_boost30.png)
 
 
+    Maximum test accuracy for depth of 10 is 0.6347107438016529 at 29 iterations
+    Time Interval:  30 minute
 
-![png](output_60_6.png)
+![png](output_boost60.png)
 
 
-    Maximum test accuracy for depth of 4 is 0.9219367588932806 at 530 iterations
+    Maximum test accuracy for depth of 10 is 0.6683209263854425 at 5 iterations
+    Time Interval:  60 minute
 
-
-We see based upon an AdaBoostClassifier the maximum test accuracy of 93.0% is attained at a depth of 2. This is attained after 751 iterations. The AdaBoostClassifier is our most accurate model so far.
 
 # Neural Networks
 
