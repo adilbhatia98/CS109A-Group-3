@@ -139,6 +139,165 @@
 
 <p>Our baseline model represents a simple logistic regression with a multiclass outcome variable. Using the predictors in our data, the model predicts the 'change in VIX price' classification as positive, negative, or 0 (no change) using a simple logistic regression.</p>          
          
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 1 min</span>
+<span class="n">logreg0</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train0</span><span class="p">,</span> <span class="n">y_train0</span><span class="p">)</span>
+<span class="n">logreg_fit_train0</span> <span class="o">=</span> <span class="n">logreg0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train0</span><span class="p">)</span>
+<span class="n">logreg_fit_test0</span> <span class="o">=</span> <span class="n">logreg0</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test0</span><span class="p">)</span>
+
+<span class="n">train_scores_logreg0</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train0</span><span class="p">,</span> <span class="n">logreg_fit_train0</span><span class="p">)</span>
+<span class="n">test_scores_logreg0</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test0</span><span class="p">,</span> <span class="n">logreg_fit_test0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training Accuracy 1 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg0</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing Accuracy 1 min: &quot;</span><span class="p">,</span> <span class="n">test_scores_logreg0</span><span class="p">)</span>
+
+<span class="c1"># 5 min</span>
+<span class="n">logreg5</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train5</span><span class="p">,</span> <span class="n">y_train5</span><span class="p">)</span>
+<span class="n">logreg_fit_train5</span> <span class="o">=</span> <span class="n">logreg5</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train5</span><span class="p">)</span>
+<span class="n">logreg_fit_test5</span> <span class="o">=</span> <span class="n">logreg5</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test5</span><span class="p">)</span>
+
+<span class="n">train_scores_logreg5</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train5</span><span class="p">,</span> <span class="n">logreg_fit_train5</span><span class="p">)</span>
+<span class="n">test_scores_logreg5</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test5</span><span class="p">,</span> <span class="n">logreg_fit_test5</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training Accuracy 5 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing Accuracy 5 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg5</span><span class="p">)</span>
+
+<span class="c1"># 10 min</span>
+<span class="n">logreg10</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train10</span><span class="p">,</span> <span class="n">y_train10</span><span class="p">)</span>
+<span class="n">logreg_fit_train10</span> <span class="o">=</span> <span class="n">logreg10</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train10</span><span class="p">)</span>
+<span class="n">logreg_fit_test10</span> <span class="o">=</span> <span class="n">logreg10</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test10</span><span class="p">)</span>
+
+<span class="n">train_scores_logreg10</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train10</span><span class="p">,</span> <span class="n">logreg_fit_train10</span><span class="p">)</span>
+<span class="n">test_scores_logreg10</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test10</span><span class="p">,</span> <span class="n">logreg_fit_test10</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training Accuracy 10 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing Accuracy 10 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg10</span><span class="p">)</span>
+
+<span class="c1"># 20 min</span>
+<span class="n">logreg20</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train20</span><span class="p">,</span> <span class="n">y_train20</span><span class="p">)</span>
+<span class="n">logreg_fit_train20</span> <span class="o">=</span> <span class="n">logreg20</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train20</span><span class="p">)</span>
+<span class="n">logreg_fit_test20</span> <span class="o">=</span> <span class="n">logreg20</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test20</span><span class="p">)</span>
+
+<span class="n">train_scores_logreg20</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train20</span><span class="p">,</span> <span class="n">logreg_fit_train20</span><span class="p">)</span>
+<span class="n">test_scores_logreg20</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test20</span><span class="p">,</span> <span class="n">logreg_fit_test20</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training Accuracy 20 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg20</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing Accuracy 20 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg20</span><span class="p">)</span>
+
+<span class="c1"># 30 min</span>
+<span class="n">logreg30</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train30</span><span class="p">,</span> <span class="n">y_train30</span><span class="p">)</span>
+<span class="n">logreg_fit_train30</span> <span class="o">=</span> <span class="n">logreg30</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train30</span><span class="p">)</span>
+<span class="n">logreg_fit_test30</span> <span class="o">=</span> <span class="n">logreg30</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test30</span><span class="p">)</span>
+
+<span class="n">train_scores_logreg30</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train30</span><span class="p">,</span> <span class="n">logreg_fit_train30</span><span class="p">)</span>
+<span class="n">test_scores_logreg30</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test30</span><span class="p">,</span> <span class="n">logreg_fit_test30</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training Accuracy 30 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg30</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing Accuracy 30 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg30</span><span class="p">)</span>
+
+<span class="c1"># 60 min</span>
+<span class="n">logreg60</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">C</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train60</span><span class="p">,</span> <span class="n">y_train60</span><span class="p">)</span>
+<span class="n">logreg_fit_train60</span> <span class="o">=</span> <span class="n">logreg60</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_train60</span><span class="p">)</span>
+<span class="n">logreg_fit_test60</span> <span class="o">=</span> <span class="n">logreg60</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test60</span><span class="p">)</span>
+
+<span class="n">train_scores_logreg60</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_train60</span><span class="p">,</span> <span class="n">logreg_fit_train60</span><span class="p">)</span>
+<span class="n">test_scores_logreg60</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test60</span><span class="p">,</span> <span class="n">logreg_fit_test60</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training Accuracy 60 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg60</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Testing Accuracy 60 min: &quot;</span><span class="p">,</span> <span class="n">train_scores_logreg60</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+  
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Interval</th>
+      <th>training accuracy</th>
+      <th>test accuracy</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4</th>
+      <td>30 minute</td>
+      <td>0.523760</td>
+      <td>0.503306</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>20 minute</td>
+      <td>0.515702</td>
+      <td>0.500826</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>60 minute</td>
+      <td>0.534946</td>
+      <td>0.499586</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>10 minute</td>
+      <td>0.491529</td>
+      <td>0.476033</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>5 minute</td>
+      <td>0.476033</td>
+      <td>0.452893</td>
+    </tr>
+    <tr>
+      <th>0</th>
+      <td>1 minute</td>
+      <td>0.468182</td>
+      <td>0.451240</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+          
 <h1 id="l1-and-l2-regularization">L1 and L2 Regularization</h1>
 
 <p>We then decided to incorporate regularization in an attempt to improve our logistic model's predictive ability. Lasso regularization (l1) sets the effects/coefficients of unimportant predictors to 0, whereas ridge (l2) simply minimizes/lowers those effects.</p>               
