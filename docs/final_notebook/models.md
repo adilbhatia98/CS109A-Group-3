@@ -99,11 +99,9 @@ For each model trial, we first split our data into a train and test set, so that
 </div>
     </div>
 </div>
-  
+ 
 <div class="output_wrapper">
 <div class="output">
-
-
 <div class="output_area">
     <div class="prompt"></div>
 <div class="output_html rendered_html output_subarea ">
@@ -169,12 +167,8 @@ For each model trial, we first split our data into a train and test set, so that
 </table>
 </div>
 </div>
-
-</div>
-
 </div>
 </div>
-
 </div>
 
 # L1 and L2 Regularization
