@@ -170,6 +170,8 @@ Interval	training accuracy	test accuracy
 1 minute	0.469421	          0.451240
 5 minute	0.473140	          0.439669
 ```
+<p>Lasso Regularization does not perform well, whereas ridge gets us just above 50% accuracy on the test set. This suggests that a few predictors may have significant impact and are being pushed to 0 improperly in lasso.</p>
+
 # Random Forest
 
 <p>Our first ensemble method is random forest, which randomly subsets predictors upon which to generate decision trees. We tested out a few different tree depth and number parameters ourselves and determined that a depth of 5 and number of trees of 100 was ideal for our analysis.</p>
@@ -225,6 +227,7 @@ Interval	training accuracy	test accuracy
 5 minute	0.591116	          0.446281
 ```
 
+<p>Random Forest performs decently relative to our original goal in the project (achieving above 50% test accuracy).</p>
 
 # Boosting
 Next, we will consider boosting, an iterative approach that might eliminate some more of the error in our trees.
@@ -319,6 +322,7 @@ for i in range(len(X_train_list)):
     Maximum test accuracy for depth of 10 is 0.6683209263854425 at 5 iterations
     Time Interval:  60 minute
 
+Boosting performs relatively well when comparing all the models. Let's try a NN to see if we can do better, though.
 
 # Neural Networks
 
@@ -361,7 +365,17 @@ for i, history in zip(range(len(intervals)), histories):
     print(f'{intervals[i]} \n ModelTraining Accuracy={kaggle_train_acc}, \n Training Loss={loss}, \n Model Validation Accuracy: {val_acc}, \n Model Validation Loss: {val_loss}, \n Difference between Validation Accuracy and Loss: {diff} \n')
 ```
 
-Even after changing hyperparameters, our neural network does not perform very well. Using 40 layers and 300 epochs, the accuracy in the training data is still 62.8% while the accuracy in the test is 65.2%. This is baffling, because we expected our neural network to perform very well. Perhaps this mediocre perforance is due to limitations of our data set (only 14 features and <5000 songs), or of the specific methods we used.
+```
+Interval	training accuracy	val accuracy	val loss
+60 minute	0.844609	          0.618194	          0.369464
+30 minute	0.843566	          0.606749	          0.376075
+20 minute	0.826741	          0.583333	          0.402431
+1 minute	0.789256	          0.573691	          0.426097
+10 minute	0.817001	          0.570248	          0.413901
+5 minute	0.784829	          0.554408	          0.442316
+```
+
+Even after changing hyperparameters, our neural network does performs pretty much in line with our other models and slightly below boosting.
 
 ---
 
