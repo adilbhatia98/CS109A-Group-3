@@ -608,7 +608,7 @@ div class="inner_cell">
 
 
 <div class="output_png output_subarea ">
-<img src="output_boost5.png">
+<img src="output_boost0.png">
 </div>
 
 </div>
@@ -719,7 +719,7 @@ Time Interval:  20 minute
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Maximum test accuracy for depth of 10 is 0.6347107438016529 at 29 iterations
+<pre> Maximum test accuracy for depth of 10 is 0.6347107438016529 at 29 iterations
 Time Interval:  30 minute
 </pre>
 </div>
@@ -744,7 +744,7 @@ Time Interval:  30 minute
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Maximum test accuracy for depth of 10 is 0.6683209263854425 at 5 iterations
+<pre> Maximum test accuracy for depth of 10 is 0.6683209263854425 at 5 iterations
 Time Interval:  60 minute
 </pre>
 </div>
@@ -758,100 +758,32 @@ Time Interval:  60 minute
 
 <p>Finally, we created an artificial neural network to classify our outcomes.</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># check input and output dimensions</span>
-<span class="n">input_dim_2</span> <span class="o">=</span> <span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">output_dim_2</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="k">print</span><span class="p">(</span><span class="n">input_dim_2</span><span class="p">,</span><span class="n">output_dim_2</span><span class="p">)</span>
-</code></pre></div></div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># prepare model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.3</span><span class="p">))</span>
+<span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;sigmoid&#39;</span><span class="p">))</span>
+<span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;binary_crossentropy&#39;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s1">&#39;adam&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">])</span>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>14 1
-</code></pre></div></div>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># define parameters</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">batch_size</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="n">validation_split</span> <span class="o">=</span> <span class="mf">0.3</span>     
+   
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># fit model</span>
+<span class="n">history0</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">np_X_train0_NN</span><span class="p">,</span> <span class="n">np_y_train0_NN</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="n">validation_split</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">history5</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">np_X_train5_NN</span><span class="p">,</span> <span class="n">np_y_train5_NN</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="n">validation_split</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">history10</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">np_X_train10_NN</span><span class="p">,</span> <span class="n">np_y_train10_NN</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="n">validation_split</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">history20</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">np_X_train20_NN</span><span class="p">,</span> <span class="n">np_y_train20_NN</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="n">validation_split</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">history30</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">np_X_train30_NN</span><span class="p">,</span> <span class="n">np_y_train30_NN</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="n">validation_split</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">history60</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">np_X_train60_NN</span><span class="p">,</span> <span class="n">np_y_train60_NN</span><span class="p">,</span> <span class="n">validation_split</span><span class="o">=</span><span class="n">validation_split</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>   
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># create sequential multi-layer perceptron</span>
-<span class="n">model2</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span> 
-
-<span class="c"># initial layer</span>
-<span class="n">model2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="n">input_dim_2</span><span class="p">,</span>  
-                <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">))</span> 
-
-<span class="c"># second layer</span>
-<span class="n">model2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="n">input_dim_2</span><span class="p">,</span>  
-                <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">))</span>
-
-<span class="c"># third layer</span>
-<span class="n">model2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="n">input_dim_2</span><span class="p">,</span>  
-                <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">))</span>
-
-<span class="c"># output layer</span>
-<span class="n">model2</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'sigmoid'</span><span class="p">))</span>
-
-<span class="c"># compile the model</span>
-<span class="n">model2</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s">'binary_crossentropy'</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s">'sgd'</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">'accuracy'</span><span class="p">])</span>
-<span class="n">model2</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># fit the model</span>
-<span class="n">model2_history</span> <span class="o">=</span> <span class="n">model2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
-    <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span>
-    <span class="n">epochs</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">validation_split</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># model loss</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"[Neural Net - Model 1] Loss: "</span><span class="p">,</span> <span class="n">model2_history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s">'loss'</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"[Neural Net - Model 1] Val Loss: "</span><span class="p">,</span> <span class="n">model2_history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s">'val_loss'</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"[Neural Net - Model 1] Test Loss: "</span><span class="p">,</span> <span class="n">model2</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"[Neural Net - Model 1] Accuracy: "</span><span class="p">,</span> <span class="n">model2_history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s">'acc'</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"[Neural Net - Model 1] Val Accuracy: "</span><span class="p">,</span> <span class="n">model2_history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s">'val_acc'</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-</code></pre></div></div>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Neural Net - Model 1] Loss:  7.79790558079957
-[Neural Net - Model 1] Val Loss:  8.034205742033103
-[Neural Net - Model 1] Test Loss:  [7.719139232937055, 0.5158102769154334]
-[Neural Net - Model 1] Accuracy:  0.5108695654529828
-[Neural Net - Model 1] Val Accuracy:  0.49604743024106085
-</code></pre></div></div>
-
-<p>Our initial accuracy isn’t great. We achieve an accuracy of 48.9% in the training and 50.4% in the validation, and an accuracy of 48.4% in the test. Let’s see if we can improve our network to fit the data better.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># create sequential multi-layer perceptron</span>
-<span class="n">model3</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span> 
-
-<span class="c"># Hidden layers</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">40</span><span class="p">):</span>
-    <span class="n">model3</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">input_dim</span><span class="o">=</span><span class="n">input_dim_2</span><span class="p">,</span> 
-        <span class="n">activation</span><span class="o">=</span><span class="s">'relu'</span><span class="p">))</span> 
-
-<span class="c"># output layer</span>
-<span class="n">model3</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="n">output_dim_2</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s">'sigmoid'</span><span class="p">))</span>
-
-
-<span class="c"># compile the model</span>
-<span class="n">model3</span><span class="o">.</span><span class="nb">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s">'binary_crossentropy'</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s">'adam'</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s">'acc'</span><span class="p">])</span>
-<span class="n">model3</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># fit the model</span>
-<span class="n">model3_history</span> <span class="o">=</span> <span class="n">model3</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
-    <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span>
-    <span class="n">epochs</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">validation_split</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">128</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># model loss</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"[Neural Net - Model 2] Loss: "</span><span class="p">,</span> <span class="n">model3_history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s">'loss'</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"[Neural Net - Model 2] Val Loss: "</span><span class="p">,</span> <span class="n">model3_history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s">'val_loss'</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"[Neural Net - Model 2] Test Loss: "</span><span class="p">,</span> <span class="n">model3</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">False</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"[Neural Net - Model 2] Accuracy: "</span><span class="p">,</span> <span class="n">model3_history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s">'acc'</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"[Neural Net - Model 2] Val Accuracy: "</span><span class="p">,</span> <span class="n">model3_history</span><span class="o">.</span><span class="n">history</span><span class="p">[</span><span class="s">'val_acc'</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-</code></pre></div></div>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Neural Net - Model 2] Loss:  0.6267417644590524
-[Neural Net - Model 2] Val Loss:  0.6291195959220698
-[Neural Net - Model 2] Test Loss:  [0.6115785545040026, 0.6432806319398843]
-[Neural Net - Model 2] Accuracy:  0.625857809154077
-[Neural Net - Model 2] Val Accuracy:  0.6197530875971288
-</code></pre></div></div>
-
-<p>Even after changing hyperparameters, our neural network does not perform very well. Using 40 layers and 300 epochs, the accuracy in the training data is still 62.8% while the accuracy in the test is 65.2%. This is baffling, because we expected our neural network to perform very well. Perhaps this mediocre perforance is due to limitations of our data set (only 14 features and &lt;5000 songs), or of the specific methods we used.</p>
+    </div>
+</div>
+</div>
 
 <hr />
 
