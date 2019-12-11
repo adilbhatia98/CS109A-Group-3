@@ -16,20 +16,20 @@ nav_order: 5
 ---
 
 # Analysis of Best Model
-Our best model is the boosted decision tree classifier with a depth of 2 and 751 iterations, 
-which performs with an accuracy of 95.4% in the training set and 93.0% in the test set.
+Our best model is the boosted decision tree classifier with a depth of 10 and 5 iterations, 
+which performs with an accuracy of 66.8% in the test set.
 
-The following table summarizes the accuracies for all our models, ordered by accuracy in the test set:
+The following table summarizes the top 10 features in our best model:
 ```
 feature	        importance
 minutes_y	        0.149895
-30_day_perc	        0.126930
-14_day_perc	        0.097110
-Last Price	        0.094082
-24_hr_perc	        0.087268
-7_day_perc	        0.071768
+30_day_perc	      0.126930
+14_day_perc	      0.097110
+Last Price	      0.094082
+24_hr_perc	      0.087268
+7_day_perc	      0.071768
 tweet_len	        0.071687
-sent_score	        0.059620
+sent_score	      0.059620
 month	            0.057562
 hour	            0.04439
 ```
@@ -47,8 +47,12 @@ hour	            0.04439
 {: .no_toc }
 <p>Idealy, we would further optimize the Neural Network model as its accuracy is currently behind ADA Boosting by about 6-7% points. We tried several different layers, regularization techniques, optimizers, batch-sizes, etc. Unfortunately, we kept leveling around the 60-62% range in our accuracy. We also adapted the data we were training the model for, as the target outcome no longer had three categories, but instead only two (just positive and negative as our threshold previously was already very low at 0.01), as our binary_cross_entropy was working better than the respective loss function for the multi-classification model (in the sense that latter was outputting ridiculously low accuracy scores).</p>
 
+### International Markets
+<p>We would also have benefitted from incorporating price and trading data from other markets—most notably, the Chinese stock market. Trump’s tweets, particularly tweets related to the trade war with China, are likely followed closely by traders there and would have a market-moving effect. Further, adding Chinese trading hours to our dataset would have allowed us to broaden the range of tweets that could be incorporated into our predictive model. It is also possible that the impact of trade-related tweets would be easier to isolate with data on the Chinese market, because the subset of Trump tweets that plausibly move stock prices in China would be narrower than those that have an impact on American shares. This reduces the possibility that our China trade tweet signals would be confounded by tweets containing those signals that are not related to the Chinese trade issue. Also, the actual market movements would be sharper, insofar as evidence suggests that the current trade dispute has a more negative impact on Chinese equities than it does on American equities.</p>
+
 ### Sentiment Analysis Improvement
 {: .no_toc }
 <p>Finally, a review of the literature highlighted the importance of clarifying and classifying sentiment more sepcifically. We could improve this model by loading specific emotion datasets to improve our sentiment analysis and take scoring beyond just positive and negative via textblob's fundamental functionality. Utilizing these libraries could help make our sentiment analysis more robust. This would be particularly important given sentiment score was not the most important predictor in our model.</p>
 
-
+# Final Thoughts
+<p>Overall, we were proud that we were able to improve our model such that test accuracy was not only above 50%, but also that it reached nearly 70%. Additionally, the fact that our model successfully reached this accuracy level for our 60 min interval offers a great trading opportunity based on the VIX index. Based on the above comments, though, we do believe more tweaking should be done in order to improve the model and make it more robust if it were to be using in an actual trading context.</p>
