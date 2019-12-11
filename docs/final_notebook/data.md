@@ -78,7 +78,7 @@ header {
 
 
 ## Twitter
-We pulled all of Trump's tweets in the last few years from his Twitter archive. Due to the naature of the database, we spent much time cleaning this data for our purposes. We took the following steps to clean the data:
+We pulled all of Trump's tweets in the last few years from his Twitter archive. Due to the nature of the database, we spent much time cleaning this data for our purposes. We took the following steps to clean the data:
 + Importing raw data from the archive
 + Removing unnecessary columns
 + Adjusting GMT to Eastern Time + accounting for daylight savings
