@@ -59,5 +59,4 @@ Finally, a review of the literature highlighted the importance of clarifying and
 {: .no_toc }
 
 # Final Thoughts
-{: .no_toc }
 Overall, we were proud that we were able to improve our model such that test accuracy was not only above 50%, but also that it reached nearly 70%. Additionally, the fact that our model successfully reached this accuracy level for our 60 min interval offers a great trading opportunity based on the VIX index. Based on the above comments, though, we do believe more tweaking should be done in order to improve the model and make it more robust if it were to be using in an actual trading context.
