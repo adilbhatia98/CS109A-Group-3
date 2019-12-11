@@ -55,7 +55,7 @@ We would also have benefitted from incorporating price and trading data from oth
 
 ### Sentiment Analysis Improvement
 {: .no_toc }
-Finally, a review of the literature highlighted the importance of clarifying and classifying sentiment more sepcifically. We could improve this model by loading specific emotion datasets to improve our sentiment analysis and take scoring beyond just positive and negative via textblob's fundamental functionality. Utilizing these libraries could help make our sentiment analysis more robust. This would be particularly important given sentiment score was not the most important predictor in our model.
+A review of the relevant literature highlighted the importance of clarifying and classifying sentiment more sepcifically. We could improve this model by loading specific emotion datasets to improve our sentiment analysis and take scoring beyond just positive and negative via textblob's fundamental functionality. Utilizing these libraries could help make our sentiment analysis more robust. This would be particularly important given sentiment score was not the most important predictor in our model.
 
 ### Regression Functional Form
 {: .no_toc }
