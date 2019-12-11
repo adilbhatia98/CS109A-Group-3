@@ -322,112 +322,44 @@ for i in range(len(X_train_list)):
 
 # Neural Networks
 
-Finally, we created an artificial neural network to classify our playlist songs.
+Finally, we created an artificial neural network to classify the changes in VIX price. In this model, we shrunk the number of categories to 2, positive and negative, to see how well this baseline NN performs.
 
+```
+# prepare model
+model = models.Sequential()
+for i in range(5):
+    model.add(tf.keras.layers.Dense(100, activation='relu'))
+    model.add(layers.Dropout(0.3))
+model.add(tf.keras.layers.Dense(1, activation='sigmoid'))
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-```python
-# check input and output dimensions
-input_dim_2 = x_train.shape[1]
-output_dim_2 = 1
-print(input_dim_2,output_dim_2)
+# define parameters
+epochs = 100
+batch_size = 12
+validation_split = 0.3
+
+# fit model
+history0 = model.fit(np_X_train0_NN, np_y_train0_NN, validation_split=validation_split, epochs=epochs, batch_size=batch_size, verbose=False)
+history5 = model.fit(np_X_train5_NN, np_y_train5_NN, validation_split=validation_split, epochs=epochs, batch_size=batch_size, verbose=False)
+history10 = model.fit(np_X_train10_NN, np_y_train10_NN, validation_split=validation_split, epochs=epochs, batch_size=batch_size, verbose=False)
+history20 = model.fit(np_X_train20_NN, np_y_train20_NN, validation_split=validation_split, epochs=epochs, batch_size=batch_size, verbose=False)
+history30 = model.fit(np_X_train30_NN, np_y_train30_NN, validation_split=validation_split, epochs=epochs, batch_size=batch_size, verbose=False)
+history60 = model.fit(np_X_train60_NN, np_y_train60_NN, validation_split=validation_split, epochs=epochs, batch_size=batch_size, verbose=False)
 ```
 
-    14 1
-
-
-
-```python
-# create sequential multi-layer perceptron
-model2 = Sequential() 
-
-# initial layer
-model2.add(Dense(10, input_dim=input_dim_2,  
-                activation='relu')) 
-
-# second layer
-model2.add(Dense(10, input_dim=input_dim_2,  
-                activation='relu'))
-
-# third layer
-model2.add(Dense(10, input_dim=input_dim_2,  
-                activation='relu'))
-
-# output layer
-model2.add(Dense(1, activation='sigmoid'))
-
-# compile the model
-model2.compile(loss='binary_crossentropy', optimizer='sgd', metrics=['accuracy'])
-model2.summary()
 ```
+# output relevant information
+histories = [history0, history5, history10, history20, history30, history60]
 
-```python
-# fit the model
-model2_history = model2.fit(
-    x_train, y_train,
-    epochs=50, validation_split = 0.5, batch_size = 128, verbose=False)
+for i, history in zip(range(len(intervals)), histories):
+    kaggle_train_acc = history.history['accuracy'][-1]
+    val_loss = history.history['val_loss'][-1]
+    val_acc = history.history['val_accuracy'][-1]
+    diff = val_acc - val_loss
+    loss = history.history['loss'][-1]
+    model.summary()
+    print(f'{intervals[i]} \n ModelTraining Accuracy={kaggle_train_acc}, \n Training Loss={loss}, \n Model Validation Accuracy: {val_acc}, \n Model Validation Loss: {val_loss}, \n Difference between Validation Accuracy and Loss: {diff} \n')
 ```
-
-
-```python
-# model loss
-print("[Neural Net - Model 1] Loss: ", model2_history.history['loss'][-1])
-print("[Neural Net - Model 1] Val Loss: ", model2_history.history['val_loss'][-1])
-print("[Neural Net - Model 1] Test Loss: ", model2.evaluate(x_test, y_test, verbose=False))
-print("[Neural Net - Model 1] Accuracy: ", model2_history.history['acc'][-1])
-print("[Neural Net - Model 1] Val Accuracy: ", model2_history.history['val_acc'][-1])
-```
-
-    [Neural Net - Model 1] Loss:  7.79790558079957
-    [Neural Net - Model 1] Val Loss:  8.034205742033103
-    [Neural Net - Model 1] Test Loss:  [7.719139232937055, 0.5158102769154334]
-    [Neural Net - Model 1] Accuracy:  0.5108695654529828
-    [Neural Net - Model 1] Val Accuracy:  0.49604743024106085
-
-
-Our initial accuracy isn't great. We achieve an accuracy of 48.9% in the training and 50.4% in the validation, and an accuracy of 48.4% in the test. Let's see if we can improve our network to fit the data better.
-
-
-```python
-# create sequential multi-layer perceptron
-model3 = Sequential() 
-
-# Hidden layers
-for i in range(40):
-    model3.add(Dense(10, input_dim=input_dim_2, 
-        activation='relu')) 
-
-# output layer
-model3.add(Dense(output_dim_2, activation='sigmoid'))
-
-
-# compile the model
-model3.compile(loss='binary_crossentropy', optimizer='adam', metrics=['acc'])
-model3.summary()
-```
-
-```python
-# fit the model
-model3_history = model3.fit(
-    x_train, y_train,
-    epochs=300, validation_split = 0.1, batch_size = 128, verbose=False)
-```
-
-
-```python
-# model loss
-print("[Neural Net - Model 2] Loss: ", model3_history.history['loss'][-1])
-print("[Neural Net - Model 2] Val Loss: ", model3_history.history['val_loss'][-1])
-print("[Neural Net - Model 2] Test Loss: ", model3.evaluate(x_test, y_test, verbose=False))
-print("[Neural Net - Model 2] Accuracy: ", model3_history.history['acc'][-1])
-print("[Neural Net - Model 2] Val Accuracy: ", model3_history.history['val_acc'][-1])
-```
-
-    [Neural Net - Model 2] Loss:  0.6267417644590524
-    [Neural Net - Model 2] Val Loss:  0.6291195959220698
-    [Neural Net - Model 2] Test Loss:  [0.6115785545040026, 0.6432806319398843]
-    [Neural Net - Model 2] Accuracy:  0.625857809154077
-    [Neural Net - Model 2] Val Accuracy:  0.6197530875971288
-
 
 Even after changing hyperparameters, our neural network does not perform very well. Using 40 layers and 300 epochs, the accuracy in the training data is still 62.8% while the accuracy in the test is 65.2%. This is baffling, because we expected our neural network to perform very well. Perhaps this mediocre perforance is due to limitations of our data set (only 14 features and <5000 songs), or of the specific methods we used.
 
