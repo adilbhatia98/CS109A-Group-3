@@ -59,6 +59,7 @@ Finally, a review of the literature highlighted the importance of clarifying and
 
 ### Regression Functional Form
 {: .no_toc }
+As briefly mentioned above, we could improve the interpretation and usefulness of the model by including interaction terms, particularly incorporating some of the indicator variables. Additionally, we could try to include quadratic terms to see how that changes the effects of certain variables in our analysis.
 
 # Final Thoughts
 Overall, we were proud that we were able to improve our model such that test accuracy was not only above 50%, but also that it reached nearly 70%. Additionally, the fact that our model successfully reached this accuracy level for our 60 min interval offers a great trading opportunity based on the VIX index. Based on the above comments, though, we do believe more tweaking should be done in order to improve the model and make it more robust if it were to be using in an actual trading context.
