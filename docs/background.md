@@ -30,19 +30,20 @@ We had three goals with this project:
 3. produce a clean interface using <i>jekyll</i> to display our project analysis and results so that others can replicate our method and hopefully improve it!
 
 # Approach
-UPDATE
 We first downloaded Trump's twitter database and cleaned the data to focus on the tweet content. Then, we analyzed it using <i>textblob<i> to generate a sentiment score for each tweet. Next, we went to HBS and manually pulled minute-by-minute VIX data (a cumbersome process, but one we believe was worth the effort!). Then, we consolidated this data into a single dataframe.
 We then randomly split this data into a training and test set with the outcome variable being the change in VIX pricing and the core explanatory variable being the sentiment score for a given tweet, along with several other predictors constructed based on the twitter and VIX data. Predicting the absolute VIX price yielded irrelevant results (nonsurprisingly), but predicting the change in VIX price produced some interesting results.
 	
 Next, we built and fit a variety of classifiers with differing VIX price change time intervals. Models we built include:
 - Baseline Model
 - Logistic Classifier
+- Regularized Logistic
+- Random Forest
+- Boosting
+- Neural Net
 
-For each model, we evaluated its accuracy on both our training and and test set. 
+<p>For each model, we evaluated its accuracy on both our training and and test set. 
 Based on accuracy scores, we determined the classifier with the highest performance on the test set. 
-Finally, we ran our best-performing model on a fresh set of songs and asked Grace if she liked her new playlist.
-
----
+In the coming weeks, we hope to utilize this model on new Trump tweets.</p>
 
 
 # Literature Review 
