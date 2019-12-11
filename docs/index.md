@@ -21,8 +21,6 @@ For our final project, we wanted to build a model that uses President Trump's tw
 
 We utilized Trump's Twitter archive [here](http://www.trumptwitterarchive.com/archive) to build our database of tweets, and we pulled minute-by-minute VIX data from an HBS Baker Library Bloomberg Terminal. Our analysis begins in May 2016 when Trump emerged as a solid, leading candidate for the GOP in the 2016 Presidential election. 
 
-*insert info about models*
-
 <div style="text-align: center">
   <img src="trump_tweet.jpg" width="40%">
 </div>
@@ -41,7 +39,7 @@ Special thanks to Robbert Struyven and James Zeitler for their assistance.
 <div style="text-align: center">
 	<img src="gaurang.jpg" width="40%">
 	<img src="yash.jpg" width="40%">
-	<img src="adil.jpg" width="40%">
 	<img src="trump.jpg" width="40%">
+	<img src="adil.jpg" width="40%">
 </div>
 
