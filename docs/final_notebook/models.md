@@ -381,7 +381,7 @@ Even after changing hyperparameters, our neural network does performs pretty muc
 
 # Model Selection
 
-Based upon the presented analysis, we conclude that our boosted decision tree classifier, at a depth of 2 with 751 iterations, is the best model. It achieves the highest accuracy in the test set, of 93.0%.
+Based upon the presented analysis, we conclude that our boosted decision tree classifier at the 60 min time interval, at a depth of 10 with 5 iterations, is the best model. It achieves the highest accuracy in the test set, of 66.8%.
 
 
 
